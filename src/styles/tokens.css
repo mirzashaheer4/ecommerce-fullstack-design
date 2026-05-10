@@ -1,0 +1,46 @@
+:root {
+  /* Colors */
+  --color-primary: #0D6EFD; 
+  --color-primary-hover: #0b5ed7;
+  --color-secondary: #FF9017; 
+  --color-background: #F5F7FA; /* Tweaked */
+  --color-surface: #FFFFFF; 
+  --color-text-primary: #1C1C1C; 
+  --color-text-secondary: #444444; /* Tweaked */
+  --color-text-muted: #8B96A5; 
+  --color-border: #DEE2E7; 
+  --color-success: #00B517; 
+  --color-error: #FA3434; 
+
+  /* Typography */
+  --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Borders */
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+  --border-radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(56,56,56,0.06); /* Tweaked */
+  --shadow-dropdown: 0px 4px 10px rgba(56, 56, 56, 0.15);
+}
