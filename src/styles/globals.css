@@ -32,6 +32,8 @@ button {
 
 input, textarea, select {
   font-family: inherit;
+  background-color: #FFFFFF;
+  color: var(--color-text-primary);
 }
 
 /* Utilities */

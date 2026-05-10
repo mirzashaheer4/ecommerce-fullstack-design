@@ -26,19 +26,19 @@ const Navbar = () => {
 
         <div className="nav-actions">
           <Link to="/profile" className="action-item">
-            <User size={20} />
+            <User size={22} strokeWidth={1.5} color="#8B96A5" />
             <span>Profile</span>
           </Link>
           <Link to="/messages" className="action-item">
-            <MessageSquare size={20} />
+            <MessageSquare size={22} strokeWidth={1.5} color="#8B96A5" />
             <span>Message</span>
           </Link>
           <Link to="/orders" className="action-item">
-            <Heart size={20} />
+            <Heart size={22} strokeWidth={1.5} color="#8B96A5" />
             <span>Orders</span>
           </Link>
           <Link to="/cart" className="action-item">
-            <ShoppingCart size={20} />
+            <ShoppingCart size={22} strokeWidth={1.5} color="#8B96A5" />
             <span>My cart</span>
           </Link>
         </div>
