@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, User, MessageSquare, Heart, ShoppingCart, Menu, ChevronDown } from 'lucide-react';
+import { Search, User, MessageSquare, Heart, ShoppingCart, Menu, ChevronDown, X } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <header className="navbar">
       {/* Top Bar */}
@@ -42,20 +44,24 @@ const Navbar = () => {
             <span>My cart</span>
           </Link>
         </div>
+
+        <button className="mobile-menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
       {/* Bottom Bar */}
-      <div className="navbar-bottom">
+      <div className={`navbar-bottom ${isMenuOpen ? 'mobile-show' : ''}`}>
         <div className="container bottom-container">
           <div className="bottom-links">
             <button className="menu-btn">
               <Menu size={20} />
               <span>All category</span>
             </button>
-            <Link to="/hot-offers">Hot offers</Link>
-            <Link to="/gift-boxes">Gift boxes</Link>
-            <Link to="/projects">Projects</Link>
-            <Link to="/menu-item">Menu item</Link>
+            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Hot offers</Link>
+            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Gift boxes</Link>
+            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Projects</Link>
+            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Menu item</Link>
             <button className="help-btn">
               <span>Help</span>
               <ChevronDown size={16} />

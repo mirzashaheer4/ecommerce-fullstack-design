@@ -144,11 +144,43 @@
   font-weight: var(--font-weight-medium);
 }
 
+.mobile-menu-toggle {
+  display: none;
+  color: var(--color-text-primary);
+}
+
 @media (max-width: 768px) {
   .search-bar {
     display: none;
   }
+  .nav-actions {
+    display: none;
+  }
+  .mobile-menu-toggle {
+    display: block;
+  }
+  .navbar-bottom {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    z-index: 1000;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .navbar-bottom.mobile-show {
+    display: block;
+  }
   .bottom-container {
-    overflow-x: auto;
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .bottom-links {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

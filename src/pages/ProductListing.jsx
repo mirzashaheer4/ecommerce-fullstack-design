@@ -6,6 +6,11 @@ import { ChevronRight, ChevronDown, ChevronUp, CheckSquare, Square, LayoutGrid, 
 
 const ProductListing = () => {
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'grid'
+  const [showFilters, setShowFilters] = useState(false);
+
+  React.useEffect(() => {
+    document.title = "Products | Summer Clothing";
+  }, []);
 
   return (
     <div className="product-listing-page container">
@@ -21,8 +26,12 @@ const ProductListing = () => {
       </div>
 
       <div className="listing-layout">
+        <button className="mobile-filter-btn" onClick={() => setShowFilters(!showFilters)}>
+          {showFilters ? 'Hide Filters' : 'Show Filters'}
+        </button>
+
         {/* Sidebar Filters */}
-        <aside className="filters-sidebar">
+        <aside className={`filters-sidebar ${showFilters ? 'mobile-show' : ''}`}>
           
           <div className="filter-section">
             <div className="filter-header">

@@ -5,6 +5,10 @@ import './Home.css';
 import { Mail, ArrowRight } from 'lucide-react';
 
 const Home = () => {
+  React.useEffect(() => {
+    document.title = "Brand | Latest Trending Electronics";
+  }, []);
+
   return (
     <div className="home-page">
       {/* Hero Section */}

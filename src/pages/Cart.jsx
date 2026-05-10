@@ -1,19 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { products } from '../data/products';
 import './Cart.css';
-import { ArrowLeft, Lock, MessageSquare, Truck } from 'lucide-react';
+import { ArrowLeft, Lock, MessageSquare, Truck, ShoppingCart } from 'lucide-react';
 
 const Cart = () => {
+  useEffect(() => {
+    document.title = "My Cart | Brand eCommerce";
+  }, []);
+
+  // For Week 1 demo, we can toggle this to test empty state
   const cartItems = [
     { ...products[5], qty: 9, seller: 'Artel Market' },
     { ...products[8], qty: 3, seller: 'Best factory LLC' },
     { ...products[0], qty: 1, seller: 'Artel Market' }
   ];
 
+  if (cartItems.length === 0) {
+    return (
+      <div className="cart-page container empty-state">
+        <div className="empty-cart-content">
+          <div className="empty-icon-circle">
+            <ShoppingCart size={48} color="#8B96A5" />
+          </div>
+          <h2>Your cart is empty</h2>
+          <p>Browse our products and find something you love!</p>
+          <Link to="/products" className="btn-primary with-icon">
+            <ArrowLeft size={18} /> Continue Shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cart-page container">
-      <h2 className="page-title">My cart (3)</h2>
+      <h2 className="page-title">My cart ({cartItems.length})</h2>
 
       <div className="cart-layout">
         <div className="cart-main">

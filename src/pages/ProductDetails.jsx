@@ -10,6 +10,12 @@ const ProductDetails = () => {
   // For demo purposes, we just grab the first product if not found
   const product = products.find(p => p.id === id) || products[0];
   const [activeTab, setActiveTab] = useState('description');
+  const [selectedImg, setSelectedImg] = useState(product.image);
+
+  React.useEffect(() => {
+    document.title = `${product.name} | Brand eCommerce`;
+    setSelectedImg(product.image);
+  }, [product]);
 
   return (
     <div className="product-details-page container">
@@ -29,12 +35,16 @@ const ProductDetails = () => {
         {/* Gallery */}
         <div className="product-gallery">
           <div className="main-image">
-            <img src={product.image} alt={product.name} />
+            <img src={selectedImg} alt={product.name} />
           </div>
           <div className="thumbnail-list">
-            {[1, 2, 3, 4, 5, 6].map(i => (
-              <div key={i} className={`thumbnail ${i === 1 ? 'active' : ''}`}>
-                <img src={product.image} alt={`Thumb ${i}`} />
+            {(product.images || [product.image]).map((img, i) => (
+              <div 
+                key={i} 
+                className={`thumbnail ${selectedImg === img ? 'active' : ''}`}
+                onClick={() => setSelectedImg(img)}
+              >
+                <img src={img} alt={`Thumb ${i}`} />
               </div>
             ))}
           </div>

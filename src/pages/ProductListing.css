@@ -270,6 +270,17 @@
   background-color: var(--color-border);
 }
 
+.mobile-filter-btn {
+  display: none;
+  width: 100%;
+  padding: 12px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 16px;
+  font-weight: var(--font-weight-medium);
+}
+
 @media (max-width: 1024px) {
   .products-container.grid-view {
     grid-template-columns: repeat(2, 1fr);
@@ -280,8 +291,15 @@
   .listing-layout {
     flex-direction: column;
   }
+  .mobile-filter-btn {
+    display: block;
+  }
   .filters-sidebar {
+    display: none;
     width: 100%;
+  }
+  .filters-sidebar.mobile-show {
+    display: block;
   }
   .listing-controls {
     flex-direction: column;
