@@ -53,62 +53,65 @@ const Footer = () => {
               Best information about the company gies here but now lorem ipsum is
             </p>
             <div className="social-links">
-              <a href="#" className="social-icon"><FacebookIcon size={18} /></a>
-              <a href="#" className="social-icon"><TwitterIcon size={18} /></a>
-              <a href="#" className="social-icon"><LinkedinIcon size={18} /></a>
-              <a href="#" className="social-icon"><InstagramIcon size={18} /></a>
-              <a href="#" className="social-icon"><YoutubeIcon size={18} /></a>
+              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Facebook link clicked'); }}><FacebookIcon size={18} /></a>
+              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Twitter link clicked'); }}><TwitterIcon size={18} /></a>
+              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Linkedin link clicked'); }}><LinkedinIcon size={18} /></a>
+              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Instagram link clicked'); }}><InstagramIcon size={18} /></a>
+              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Youtube link clicked'); }}><YoutubeIcon size={18} /></a>
             </div>
           </div>
-
+          
           <div className="footer-links">
-            <div className="link-column">
+            <div className="footer-col">
               <h4>About</h4>
               <Link to="/about">About Us</Link>
-              <Link to="/find-store">Find store</Link>
-              <Link to="/categories">Categories</Link>
-              <Link to="/blogs">Blogs</Link>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Find store'); }}>Find store</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Categories'); }}>Categories</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Blogs'); }}>Blogs</a>
             </div>
-            <div className="link-column">
+            <div className="footer-col">
               <h4>Partnership</h4>
-              <Link to="/about">About Us</Link>
-              <Link to="/find-store">Find store</Link>
-              <Link to="/categories">Categories</Link>
-              <Link to="/blogs">Blogs</Link>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('About Us'); }}>About Us</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Find store'); }}>Find store</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Categories'); }}>Categories</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Blogs'); }}>Blogs</a>
             </div>
-            <div className="link-column">
+            <div className="footer-col">
               <h4>Information</h4>
               <Link to="/help">Help Center</Link>
-              <Link to="/refund">Money Refund</Link>
-              <Link to="/shipping">Shipping</Link>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Money Refund'); }}>Money Refund</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Shipping'); }}>Shipping</a>
               <Link to="/contact">Contact us</Link>
             </div>
-            <div className="link-column">
+            <div className="footer-col">
               <h4>For users</h4>
               <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>
-              <Link to="/settings">Settings</Link>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert('Settings'); }}>Settings</a>
               <Link to="/orders">My Orders</Link>
             </div>
-          </div>
-
-          <div className="footer-app">
-            <h4>Get app</h4>
-            <div className="app-buttons">
-              <img src="https://placehold.co/120x40/000000/FFFFFF?text=App+Store" alt="App Store" />
-              <img src="https://placehold.co/120x40/000000/FFFFFF?text=Google+Play" alt="Google Play" />
+            <div className="footer-col">
+              <h4>Get app</h4>
+              <div className="app-links">
+                <a href="#" onClick={(e) => { e.preventDefault(); alert('App Store link'); }}>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" style={{ height: '40px' }} />
+                </a>
+                <a href="#" onClick={(e) => { e.preventDefault(); alert('Google Play link'); }}>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" style={{ height: '40px' }} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      <div className="footer-bottom">
-        <div className="container bottom-container">
-          <p>© 2023 Ecommerce.</p>
-          <div className="footer-language">
-            <span className="flag">🇺🇸</span>
-            <span>English</span>
-            <ChevronUp size={16} />
+
+        <div className="footer-bottom">
+          <div className="container footer-bottom-content">
+            <p>© 2023 Ecommerce.</p>
+            <div className="bottom-settings">
+              <button className="setting-btn" onClick={() => alert('Language changed')}>
+                <span className="flag">🇺🇸</span> English <ChevronUp size={16} />
+              </button>
+            </div>
           </div>
         </div>
       </div>

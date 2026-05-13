@@ -1,12 +1,31 @@
-import React from 'react';
-import { products } from '../data/products';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { fetchFeaturedProducts } from '../api/productApi';
 import ProductCard from '../components/ProductCard';
+import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import './Home.css';
 import { Mail, ArrowRight } from 'lucide-react';
 
 const Home = () => {
-  React.useEffect(() => {
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
     document.title = "Brand | Latest Trending Electronics";
+
+    const loadFeatured = async () => {
+      setLoading(true);
+      setError(null);
+      const products = await fetchFeaturedProducts();
+      if (products.length === 0) {
+        setError('Could not load featured products.');
+      }
+      setFeaturedProducts(products);
+      setLoading(false);
+    };
+
+    loadFeatured();
   }, []);
 
   return (
@@ -16,33 +35,33 @@ const Home = () => {
         <div className="hero-content">
           <div className="hero-sidebar">
             <ul className="category-list">
-              <li className="active">Automobiles</li>
-              <li>Clothes and wear</li>
-              <li>Home interiors</li>
-              <li>Computer and tech</li>
-              <li>Tools, equipments</li>
-              <li>Sports and outdoor</li>
-              <li>Animal and pets</li>
-              <li>Machinery tools</li>
-              <li>More category</li>
+              <li className="active"><Link to="/products">Automobiles</Link></li>
+              <li><Link to="/products">Clothes and wear</Link></li>
+              <li><Link to="/products">Home interiors</Link></li>
+              <li><Link to="/products">Computer and tech</Link></li>
+              <li><Link to="/products">Tools, equipments</Link></li>
+              <li><Link to="/products">Sports and outdoor</Link></li>
+              <li><Link to="/products">Animal and pets</Link></li>
+              <li><Link to="/products">Machinery tools</Link></li>
+              <li><Link to="/products">More category</Link></li>
             </ul>
           </div>
           <div className="hero-banner">
             <div className="banner-text">
               <h3>Latest trending</h3>
               <h2>Electronic items</h2>
-              <button className="learn-more-btn">Learn more</button>
+              <Link to="/products" className="learn-more-btn">Learn more</Link>
             </div>
-            <img src="https://placehold.co/400x300/e2e8f0/64748b?text=Headphones" alt="Trending" className="banner-bg" />
+            <img src="https://cdn.dummyjson.com/product-images/smartphones/samsung-galaxy-s10/1.webp" alt="Trending" className="banner-bg" />
           </div>
           <div className="hero-right">
             <div className="user-card">
               <div className="user-info">
-                <div className="user-avatar"></div>
+                <div className="user-avatar" style={{ backgroundImage: 'url(https://cdn.dummyjson.com/icon/emilys/128)', backgroundSize: 'cover', borderRadius: '50%' }}></div>
                 <p>Hi, user<br/>let's get stated</p>
               </div>
-              <button className="btn-primary full-width">Join now</button>
-              <button className="btn-outline full-width">Log in</button>
+              <Link to="/register" className="btn-primary full-width" style={{ display: 'block', textAlign: 'center' }}>Join now</Link>
+              <Link to="/login" className="btn-outline full-width" style={{ display: 'block', textAlign: 'center' }}>Log in</Link>
             </div>
             <div className="offer-card orange">
               <p>Get US $10 off with a new supplier</p>
@@ -68,13 +87,23 @@ const Home = () => {
             </div>
           </div>
           <div className="deals-items">
-            {products.slice(0, 5).map((item) => (
-              <div key={item.id} className="deal-item">
-                <img src={item.image} alt={item.name} />
-                <p className="deal-name">{item.name}</p>
-                <span className="deal-discount">-25%</span>
-              </div>
-            ))}
+            {loading ? (
+              [1,2,3,4,5].map(i => (
+                <div key={i} className="deal-item">
+                  <div className="skeleton" style={{ width: 120, height: 120, marginBottom: 12 }}></div>
+                  <div className="skeleton skeleton-line medium"></div>
+                  <div className="skeleton skeleton-line short"></div>
+                </div>
+              ))
+            ) : (
+              featuredProducts.slice(0, 5).map((item) => (
+                <Link to={`/products/${item._id}`} key={item._id} className="deal-item">
+                  <img src={item.images[0]} alt={item.name} />
+                  <p className="deal-name">{item.name}</p>
+                  <span className="deal-discount">-25%</span>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -85,18 +114,27 @@ const Home = () => {
           <div className="grid-banner" style={{ backgroundColor: '#F3EFE9' }}>
             <div className="banner-content">
               <h3>Home and outdoor</h3>
-              <button className="source-now-btn">Source now</button>
+              <Link to="/products?category=Home" className="source-now-btn">Source now</Link>
             </div>
           </div>
           <div className="grid-items">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="grid-item">
+            {[
+              { name: 'Soft chairs', price: '19', img: 'https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/thumbnail.webp' },
+              { name: 'Sofa & chair', price: '19', img: 'https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/thumbnail.webp' },
+              { name: 'Kitchen dishes', price: '19', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/plate/thumbnail.webp' },
+              { name: 'Smart watches', price: '19', img: 'https://cdn.dummyjson.com/product-images/mobile-accessories/apple-watch-series-4-gold/thumbnail.webp' },
+              { name: 'Kitchen mixer', price: '39', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/hand-blender/thumbnail.webp' },
+              { name: 'Plant pots', price: '19', img: 'https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/thumbnail.webp' },
+              { name: 'Coffee maker', price: '19', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/boxed-blender/thumbnail.webp' },
+              { name: 'Table lamp', price: '19', img: 'https://cdn.dummyjson.com/product-images/home-decoration/table-lamp/thumbnail.webp' },
+            ].map((item, i) => (
+              <Link to="/products" key={i} className="grid-item">
                 <div className="item-text">
-                  <h4>Soft chairs</h4>
-                  <p>From USD 19</p>
+                  <h4>{item.name}</h4>
+                  <p>From USD {item.price}</p>
                 </div>
-                <img src={`https://placehold.co/80x80/e2e8f0/64748b?text=Item+${i}`} alt="Item" />
-              </div>
+                <img src={item.img} alt={item.name} style={{ width: '80px', height: '80px', objectFit: 'contain' }} />
+              </Link>
             ))}
           </div>
         </div>
@@ -106,9 +144,19 @@ const Home = () => {
       <section className="recommended-section container">
         <h3>Recommended items</h3>
         <div className="recommended-grid">
-          {products.slice(0, 10).map(product => (
-            <ProductCard key={product.id} product={product} variant="grid" />
-          ))}
+          {loading ? (
+            Array.from({ length: 10 }).map((_, i) => (
+              <ProductCardSkeleton key={i} variant="grid" />
+            ))
+          ) : error ? (
+            <p style={{ color: 'var(--color-text-muted)', gridColumn: '1 / -1', textAlign: 'center', padding: '40px' }}>
+              {error}
+            </p>
+          ) : (
+            featuredProducts.map(product => (
+              <ProductCard key={product._id} product={product} variant="grid" />
+            ))
+          )}
         </div>
       </section>
 
@@ -119,16 +167,16 @@ const Home = () => {
             <h2>An easy way to send requests to all suppliers</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
           </div>
-          <div className="quotes-form">
+          <form className="quotes-form" onSubmit={(e) => { e.preventDefault(); alert('Inquiry sent successfully!'); }}>
             <h3>Send quote to suppliers</h3>
-            <input type="text" placeholder="What item you need?" />
-            <textarea placeholder="Type more details" rows="3"></textarea>
+            <input type="text" placeholder="What item you need?" required />
+            <textarea placeholder="Type more details" rows="3" required></textarea>
             <div className="form-row">
-              <input type="text" placeholder="Quantity" />
+              <input type="text" placeholder="Quantity" required />
               <select><option>Pcs</option></select>
             </div>
-            <button className="btn-primary">Send inquiry</button>
-          </div>
+            <button type="submit" className="btn-primary">Send inquiry</button>
+          </form>
         </div>
       </section>
 
@@ -137,13 +185,13 @@ const Home = () => {
         <div className="container newsletter-content">
           <h3>Subscribe on our newsletter</h3>
           <p>Get daily news on upcoming offers from many suppliers all over the world</p>
-          <div className="newsletter-form">
+          <form className="newsletter-form" onSubmit={(e) => { e.preventDefault(); alert('Subscribed successfully!'); }}>
             <div className="input-wrapper">
               <Mail size={20} color="#8B96A5" />
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Email" required />
             </div>
-            <button className="btn-primary">Subscribe</button>
-          </div>
+            <button type="submit" className="btn-primary">Subscribe</button>
+          </form>
         </div>
       </section>
     </div>

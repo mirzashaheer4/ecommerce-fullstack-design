@@ -1,21 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { products } from '../data/products';
-import ProductCard from '../components/ProductCard';
+import { fetchProductById, fetchRelatedProducts } from '../api/productApi';
+import { useCart } from '../context/CartContext';
+import ProductDetailsSkeleton from '../components/ProductDetailsSkeleton';
 import './ProductDetails.css';
-import { ChevronRight, Star, Heart, Check, MessageSquare, Shield, Globe } from 'lucide-react';
+import { ChevronRight, Star, Heart, Check, MessageSquare, Shield, Globe, ArrowLeft } from 'lucide-react';
 
 const ProductDetails = () => {
   const { id } = useParams();
-  // For demo purposes, we just grab the first product if not found
-  const product = products.find(p => p.id === id) || products[0];
+  const { addToCart } = useCart();
+  const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('description');
-  const [selectedImg, setSelectedImg] = useState(product.image);
+  const [selectedImg, setSelectedImg] = useState('');
 
-  React.useEffect(() => {
-    document.title = `${product.name} | Brand eCommerce`;
-    setSelectedImg(product.image);
-  }, [product]);
+  useEffect(() => {
+    const loadProduct = async () => {
+      setLoading(true);
+      setError(null);
+
+      const prod = await fetchProductById(id);
+      if (!prod) {
+        setError('Product not found');
+        setLoading(false);
+        return;
+      }
+
+      setProduct(prod);
+      setSelectedImg(prod.images?.[0] || '');
+      document.title = `${prod.name} | Brand eCommerce`;
+
+      const related = await fetchRelatedProducts(id);
+      setRelatedProducts(related);
+
+      setLoading(false);
+    };
+
+    loadProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="product-details-page container">
+        <div className="breadcrumb">
+          <span>Home</span>
+          <ChevronRight size={16} />
+          <span>Loading...</span>
+        </div>
+        <ProductDetailsSkeleton />
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="product-details-page container" style={{ textAlign: 'center', padding: '80px 20px' }}>
+        <h2 style={{ marginBottom: '16px', color: 'var(--color-text-primary)' }}>Product not found</h2>
+        <p style={{ marginBottom: '24px', color: 'var(--color-text-muted)' }}>
+          The product you're looking for doesn't exist or has been removed.
+        </p>
+        <Link to="/products" className="btn-primary with-icon" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+          <ArrowLeft size={18} /> Back to Products
+        </Link>
+      </div>
+    );
+  }
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    alert(`${product.name} added to cart!`);
+  };
 
   return (
     <div className="product-details-page container">
@@ -23,11 +79,9 @@ const ProductDetails = () => {
       <div className="breadcrumb">
         <span>Home</span>
         <ChevronRight size={16} />
-        <span>Clothings</span>
+        <span>{product.category}</span>
         <ChevronRight size={16} />
-        <span>Men's wear</span>
-        <ChevronRight size={16} />
-        <span className="current">Summer clothing</span>
+        <span className="current">{product.name}</span>
       </div>
 
       {/* Main Details Section */}
@@ -38,7 +92,7 @@ const ProductDetails = () => {
             <img src={selectedImg} alt={product.name} />
           </div>
           <div className="thumbnail-list">
-            {(product.images || [product.image]).map((img, i) => (
+            {(product.images || []).map((img, i) => (
               <div 
                 key={i} 
                 className={`thumbnail ${selectedImg === img ? 'active' : ''}`}
@@ -52,30 +106,30 @@ const ProductDetails = () => {
 
         {/* Info */}
         <div className="product-info-main">
-          <span className="in-stock"><Check size={16} /> In stock</span>
+          <span className="in-stock"><Check size={16} /> {product.stock > 0 ? 'In stock' : 'Out of stock'}</span>
           <h1 className="detail-title">{product.name}</h1>
           <div className="detail-meta">
             <div className="rating-stars">
-              {[1,2,3,4,5].map(star => <Star key={star} size={16} fill={star <= 4 ? '#FF9017' : '#DEE2E7'} color={star <= 4 ? '#FF9017' : '#DEE2E7'} />)}
-              <span className="rating-value">9.3</span>
+              {[1,2,3,4,5].map(star => <Star key={star} size={16} fill={star <= Math.round(product.rating) ? '#FF9017' : '#DEE2E7'} color={star <= Math.round(product.rating) ? '#FF9017' : '#DEE2E7'} />)}
+              <span className="rating-value">{product.rating}</span>
             </div>
             <span className="dot">•</span>
-            <span className="meta-text"><MessageSquare size={16} /> 32 reviews</span>
+            <span className="meta-text"><MessageSquare size={16} /> {product.reviewCount} reviews</span>
             <span className="dot">•</span>
             <span className="meta-text">154 sold</span>
           </div>
 
           <div className="price-tiers">
             <div className="tier highlight">
-              <h4>$98.00</h4>
+              <h4>${product.price.toFixed(2)}</h4>
               <p>50-100 pcs</p>
             </div>
             <div className="tier">
-              <h4>$90.00</h4>
+              <h4>${(product.price * 0.92).toFixed(2)}</h4>
               <p>100-700 pcs</p>
             </div>
             <div className="tier">
-              <h4>$78.00</h4>
+              <h4>${(product.price * 0.8).toFixed(2)}</h4>
               <p>700+ pcs</p>
             </div>
           </div>
@@ -135,10 +189,10 @@ const ProductDetails = () => {
                 <Globe size={18} color="#8B96A5" /> Worldwide shipping
               </div>
             </div>
-            <button className="btn-primary full-width">Send inquiry</button>
-            <button className="btn-outline full-width">Seller's profile</button>
+            <button className="btn-primary full-width" onClick={handleAddToCart}>Add to cart</button>
+            <Link to="/profile" className="btn-outline full-width" style={{ display: 'block', textAlign: 'center' }}>Seller's profile</Link>
           </div>
-          <button className="save-later-btn">
+          <button className="save-later-btn" onClick={() => alert('Product saved for later!')}>
             <Heart size={20} color="#0D6EFD" /> Save for later
           </button>
         </div>
@@ -158,7 +212,8 @@ const ProductDetails = () => {
               {activeTab === 'description' && (
                 <>
                   <p className="description-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br/><br/>
+                    {product.description}
+                    <br/><br/>
                     Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                   </p>
                   <table className="specs-table">
@@ -185,9 +240,9 @@ const ProductDetails = () => {
         <aside className="you-may-like">
           <h3>You may like</h3>
           <div className="small-product-list">
-            {products.slice(4, 9).map(p => (
-              <Link to={`/products/${p.id}`} key={p.id} className="small-product">
-                <img src={p.image} alt={p.name} />
+            {relatedProducts.slice(0, 5).map(p => (
+              <Link to={`/products/${p._id}`} key={p._id} className="small-product">
+                <img src={p.images?.[0]} alt={p.name} />
                 <div className="sp-info">
                   <h4>{p.name}</h4>
                   <span className="sp-price">${p.price.toFixed(2)} - ${(p.price + 20).toFixed(2)}</span>
@@ -202,14 +257,14 @@ const ProductDetails = () => {
       <section className="related-products">
         <h3>Related products</h3>
         <div className="related-grid">
-          {products.slice(0, 6).map(p => (
-            <div key={p.id} className="related-card">
+          {relatedProducts.map(p => (
+            <Link to={`/products/${p._id}`} key={p._id} className="related-card">
               <div className="img-wrap">
-                <img src={p.image} alt={p.name} />
+                <img src={p.images?.[0]} alt={p.name} />
               </div>
               <h4>{p.name}</h4>
               <span className="price">${p.price.toFixed(2)}-${(p.price + 8).toFixed(2)}</span>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

@@ -1,10 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Star } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 import './ProductCard.css';
 
 const ProductCard = ({ product, variant = 'grid' }) => {
-  const { id, name, price, originalPrice, image, rating, reviewCount, description, freeShipping } = product;
+  const { _id, id, name, price, originalPrice, image, images, rating, reviewCount, description, freeShipping } = product;
+  const { addToCart } = useCart();
+  const productId = _id || id;
+  const productImage = images?.[0] || image;
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product);
+  };
 
   const renderStars = () => {
     return (
@@ -21,12 +31,12 @@ const ProductCard = ({ product, variant = 'grid' }) => {
     return (
       <div className="product-card list-variant">
         <div className="product-image-container">
-          <img src={image} alt={name} className="product-image" />
+          <img src={productImage} alt={name} className="product-image" />
         </div>
         <div className="product-info">
           <div className="info-top">
             <h3 className="product-name">{name}</h3>
-            <button className="favorite-btn"><Heart size={20} color="#0D6EFD" /></button>
+            <button className="favorite-btn" onClick={handleAddToCart} title="Add to cart"><Heart size={20} color="#0D6EFD" /></button>
           </div>
           <div className="product-price-section">
             <span className="current-price">${price.toFixed(2)}</span>
@@ -44,7 +54,7 @@ const ProductCard = ({ product, variant = 'grid' }) => {
             )}
           </div>
           <p className="product-desc">{description}</p>
-          <Link to={`/products/${id}`} className="view-details">View details</Link>
+          <Link to={`/products/${productId}`} className="view-details">View details</Link>
         </div>
       </div>
     );
@@ -52,9 +62,9 @@ const ProductCard = ({ product, variant = 'grid' }) => {
 
   // Grid variant
   return (
-    <div className="product-card grid-variant">
+    <Link to={`/products/${productId}`} className="product-card grid-variant" style={{ textDecoration: 'none' }}>
       <div className="product-image-container">
-        <img src={image} alt={name} className="product-image" />
+        <img src={productImage} alt={name} className="product-image" />
       </div>
       <div className="product-info">
         <div className="product-price-section">
@@ -64,7 +74,7 @@ const ProductCard = ({ product, variant = 'grid' }) => {
         {renderStars()}
         <h3 className="product-name">{name}</h3>
       </div>
-    </div>
+    </Link>
   );
 };
 

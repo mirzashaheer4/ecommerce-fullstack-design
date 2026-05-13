@@ -1,20 +1,15 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { products } from '../data/products';
+import { useCart } from '../context/CartContext';
 import './Cart.css';
 import { ArrowLeft, Lock, MessageSquare, Truck, ShoppingCart } from 'lucide-react';
 
 const Cart = () => {
+  const { cartItems, cartTotal, updateQuantity, removeFromCart, clearCart } = useCart();
+
   useEffect(() => {
     document.title = "My Cart | Brand eCommerce";
   }, []);
-
-  // For Week 1 demo, we can toggle this to test empty state
-  const cartItems = [
-    { ...products[5], qty: 9, seller: 'Artel Market' },
-    { ...products[8], qty: 3, seller: 'Best factory LLC' },
-    { ...products[0], qty: 1, seller: 'Artel Market' }
-  ];
 
   if (cartItems.length === 0) {
     return (
@@ -33,6 +28,11 @@ const Cart = () => {
     );
   }
 
+  const discount = 60;
+  const tax = 14;
+  const subtotal = cartTotal;
+  const total = subtotal - discount + tax;
+
   return (
     <div className="cart-page container">
       <h2 className="page-title">My cart ({cartItems.length})</h2>
@@ -41,8 +41,8 @@ const Cart = () => {
         <div className="cart-main">
           {/* Cart Items */}
           <div className="cart-items-card">
-            {cartItems.map((item, index) => (
-              <div key={index} className="cart-item">
+            {cartItems.map((item) => (
+              <div key={item._id} className="cart-item">
                 <div className="item-image">
                   <img src={item.image} alt={item.name} />
                 </div>
@@ -56,10 +56,14 @@ const Cart = () => {
                   
                   <div className="item-actions-row">
                     <div className="item-actions">
-                      <button className="action-btn error-text">Remove</button>
-                      <button className="action-btn text-primary">Save for later</button>
+                      <button className="action-btn error-text" onClick={() => removeFromCart(item._id)}>Remove</button>
+                      <button className="action-btn text-primary" onClick={() => alert('Item saved for later')}>Save for later</button>
                     </div>
-                    <select className="qty-select" defaultValue={item.qty}>
+                    <select
+                      className="qty-select"
+                      value={item.qty}
+                      onChange={(e) => updateQuantity(item._id, Number(e.target.value))}
+                    >
                       {[1,2,3,4,5,6,7,8,9,10].map(n => (
                         <option key={n} value={n}>Qty: {n}</option>
                       ))}
@@ -73,7 +77,7 @@ const Cart = () => {
               <Link to="/products" className="btn-primary with-icon">
                 <ArrowLeft size={18} /> Back to shop
               </Link>
-              <button className="btn-outline">Remove all</button>
+              <button className="btn-outline" onClick={clearCart}>Remove all</button>
             </div>
           </div>
 
@@ -102,73 +106,54 @@ const Cart = () => {
             </div>
           </div>
 
-          {/* Saved for later */}
-          <section className="saved-for-later">
-            <h3>Saved for later</h3>
-            <div className="saved-grid">
-              {products.slice(1, 5).map(p => (
-                <div key={p.id} className="saved-card">
-                  <div className="img-wrap">
-                    <img src={p.image} alt={p.name} />
-                  </div>
-                  <span className="price">${p.price.toFixed(2)}</span>
-                  <p className="title">{p.name}</p>
-                  <button className="btn-outline full-width with-icon justify-center">
-                    <ShoppingCartIcon /> Move to cart
-                  </button>
-                </div>
-              ))}
-            </div>
-          </section>
-
           {/* Discount Banner */}
           <div className="discount-banner">
             <div className="banner-text-content">
               <h2>Super discount on more than 100 USD</h2>
               <p>Have you ever finally just write dummy info</p>
             </div>
-            <button className="btn-secondary">Shop now</button>
+            <Link to="/products" className="btn-secondary">Shop now</Link>
           </div>
 
         </div>
 
         {/* Sidebar */}
         <div className="cart-sidebar">
-          <div className="coupon-card">
+          <form className="coupon-card" onSubmit={(e) => { e.preventDefault(); alert('Coupon applied!'); }}>
             <p>Have a coupon?</p>
             <div className="coupon-input">
-              <input type="text" placeholder="Add coupon" />
-              <button className="btn-outline">Apply</button>
+              <input type="text" placeholder="Add coupon" required />
+              <button type="submit" className="btn-outline">Apply</button>
             </div>
-          </div>
+          </form>
 
           <div className="summary-card">
             <div className="summary-row">
               <span>Subtotal:</span>
-              <span>$1403.97</span>
+              <span>${subtotal.toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Discount:</span>
-              <span className="text-error">- $60.00</span>
+              <span className="text-error">- ${discount.toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Tax:</span>
-              <span className="text-success">+ $14.00</span>
+              <span className="text-success">+ ${tax.toFixed(2)}</span>
             </div>
             <div className="divider"></div>
             <div className="summary-row total">
               <span>Total:</span>
-              <span>$1357.97</span>
+              <span>${total.toFixed(2)}</span>
             </div>
-            <button className="btn-success full-width" style={{ marginTop: '20px', padding: '12px', fontSize: '18px' }}>
+            <button className="btn-success full-width" style={{ marginTop: '20px', padding: '12px', fontSize: '18px' }} onClick={() => alert('Proceeding to checkout...')}>
               Checkout
             </button>
             <div className="payment-methods">
-              <img src="https://placehold.co/40x25/e2e8f0/64748b?text=Amex" alt="Amex" />
-              <img src="https://placehold.co/40x25/e2e8f0/64748b?text=MC" alt="Mastercard" />
-              <img src="https://placehold.co/40x25/e2e8f0/64748b?text=PayPal" alt="PayPal" />
-              <img src="https://placehold.co/40x25/e2e8f0/64748b?text=Visa" alt="Visa" />
-              <img src="https://placehold.co/40x25/e2e8f0/64748b?text=Apple" alt="Apple Pay" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" style={{ height: '24px', backgroundColor: 'white', padding: '2px', borderRadius: '4px' }} />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style={{ height: '24px', backgroundColor: 'white', padding: '2px', borderRadius: '4px' }} />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style={{ height: '24px', backgroundColor: 'white', padding: '2px', borderRadius: '4px' }} />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" style={{ height: '24px', backgroundColor: 'white', padding: '2px', borderRadius: '4px' }} />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg" alt="Apple Pay" style={{ height: '24px', backgroundColor: 'white', padding: '2px', borderRadius: '4px' }} />
             </div>
           </div>
         </div>
@@ -176,14 +161,5 @@ const Cart = () => {
     </div>
   );
 };
-
-// Mini icon component for this file
-const ShoppingCartIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="9" cy="21" r="1"></circle>
-    <circle cx="20" cy="21" r="1"></circle>
-    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-  </svg>
-);
 
 export default Cart;

@@ -1,0 +1,151 @@
+/* Skeleton loading pulse animation */
+@keyframes skeleton-pulse {
+  0% {
+    background-color: var(--color-border);
+  }
+  50% {
+    background-color: var(--color-background);
+  }
+  100% {
+    background-color: var(--color-border);
+  }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  border-radius: var(--border-radius-sm);
+}
+
+.skeleton-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 200px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skeleton-line {
+  height: 14px;
+  margin-bottom: 8px;
+  border-radius: var(--border-radius-sm);
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+.skeleton-line.medium {
+  width: 80%;
+}
+
+.skeleton-line.full {
+  width: 100%;
+}
+
+.skeleton-line.price {
+  height: 20px;
+  width: 40%;
+  margin-bottom: 4px;
+}
+
+/* List variant skeleton */
+.skeleton-card.list-variant {
+  display: flex;
+  padding: var(--spacing-md);
+}
+
+.skeleton-card.list-variant .skeleton-image {
+  width: 210px;
+  height: 210px;
+  flex-shrink: 0;
+  margin-right: var(--spacing-lg);
+  border-bottom: none;
+}
+
+.skeleton-card.list-variant .skeleton-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+/* Grid variant skeleton */
+.skeleton-card.grid-variant .skeleton-info {
+  padding: var(--spacing-md);
+}
+
+/* Details page skeleton */
+.skeleton-details {
+  display: flex;
+  gap: 20px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: 20px;
+}
+
+.skeleton-gallery {
+  width: 380px;
+  flex-shrink: 0;
+}
+
+.skeleton-gallery .skeleton-main-img {
+  width: 100%;
+  height: 380px;
+  margin-bottom: 12px;
+}
+
+.skeleton-gallery .skeleton-thumbs {
+  display: flex;
+  gap: 8px;
+}
+
+.skeleton-gallery .skeleton-thumb {
+  width: 56px;
+  height: 56px;
+}
+
+.skeleton-detail-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-supplier {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.skeleton-supplier-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .skeleton-card.list-variant {
+    flex-direction: column;
+  }
+  .skeleton-card.list-variant .skeleton-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    margin-right: 0;
+    margin-bottom: var(--spacing-md);
+  }
+  .skeleton-details {
+    flex-direction: column;
+  }
+  .skeleton-gallery,
+  .skeleton-supplier {
+    width: 100%;
+  }
+}
