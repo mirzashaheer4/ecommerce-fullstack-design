@@ -170,6 +170,115 @@
   color: var(--color-text-primary);
 }
 
+/* ===== User Dropdown ===== */
+.user-dropdown-container {
+  position: relative;
+}
+
+.user-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  gap: 4px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.user-action-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.user-avatar-small {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--border-radius-full);
+  background-color: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-dropdown);
+  min-width: 240px;
+  z-index: 1000;
+  padding: 8px 0;
+}
+
+.dropdown-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.dropdown-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-full);
+  background-color: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.dropdown-name {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.dropdown-email {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 4px 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.15s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-family-primary);
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-background);
+}
+
+.dropdown-logout {
+  color: var(--color-error);
+}
+
 @media (max-width: 768px) {
   .search-bar {
     display: none;

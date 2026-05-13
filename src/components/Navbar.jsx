@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, MessageSquare, Heart, ShoppingCart, Menu, ChevronDown, X } from 'lucide-react';
+import { Search, User, MessageSquare, Heart, ShoppingCart, Menu, ChevronDown, X, LogOut, Shield, Settings } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   const navigate = useNavigate();
   const { cartCount } = useCart();
+  const { isAuthenticated, isAdmin, user, logoutUser } = useAuth();
+  const dropdownRef = useRef(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -17,6 +21,23 @@ const Navbar = () => {
       setSearchQuery('');
     }
   };
+
+  const handleLogout = () => {
+    setShowUserDropdown(false);
+    logoutUser();
+    navigate('/login');
+  };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowUserDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="navbar">
@@ -44,10 +65,59 @@ const Navbar = () => {
         </form>
 
         <div className="nav-actions">
-          <Link to="/profile" className="action-item">
-            <User size={22} strokeWidth={1.5} color="#8B96A5" />
-            <span>Profile</span>
-          </Link>
+          {isAuthenticated ? (
+            /* Authenticated: show user dropdown */
+            <div className="user-dropdown-container" ref={dropdownRef}>
+              <button
+                className="action-item user-action-btn"
+                onClick={() => setShowUserDropdown(!showUserDropdown)}
+              >
+                <div className="user-avatar-small">
+                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                </div>
+                <span>{user?.name?.split(' ')[0] || 'Account'}</span>
+                <ChevronDown size={14} />
+              </button>
+              {showUserDropdown && (
+                <div className="user-dropdown">
+                  <div className="dropdown-user-info">
+                    <div className="dropdown-avatar">
+                      {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                    </div>
+                    <div>
+                      <p className="dropdown-name">{user?.name}</p>
+                      <p className="dropdown-email">{user?.email}</p>
+                    </div>
+                  </div>
+                  <div className="dropdown-divider"></div>
+                  <Link to="/profile" className="dropdown-item" onClick={() => setShowUserDropdown(false)}>
+                    <Settings size={16} /> My Profile
+                  </Link>
+                  {isAdmin && (
+                    <Link to="/admin" className="dropdown-item" onClick={() => setShowUserDropdown(false)}>
+                      <Shield size={16} /> Admin Panel
+                    </Link>
+                  )}
+                  <div className="dropdown-divider"></div>
+                  <button className="dropdown-item dropdown-logout" onClick={handleLogout}>
+                    <LogOut size={16} /> Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Not authenticated: show login/register links */
+            <>
+              <Link to="/login" className="action-item">
+                <User size={22} strokeWidth={1.5} color="#8B96A5" />
+                <span>Login</span>
+              </Link>
+              <Link to="/register" className="action-item">
+                <User size={22} strokeWidth={1.5} color="#8B96A5" />
+                <span>Register</span>
+              </Link>
+            </>
+          )}
           <Link to="/messages" className="action-item">
             <MessageSquare size={22} strokeWidth={1.5} color="#8B96A5" />
             <span>Message</span>
