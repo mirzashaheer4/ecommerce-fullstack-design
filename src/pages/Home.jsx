@@ -57,7 +57,7 @@ const Home = () => {
           <div className="hero-right">
             <div className="user-card">
               <div className="user-info">
-                <div className="user-avatar" style={{ backgroundImage: 'url(https://cdn.dummyjson.com/icon/emilys/128)', backgroundSize: 'cover', borderRadius: '50%' }}></div>
+                <div className="user-avatar" style={{ backgroundImage: 'url(https://i.pravatar.cc/150?u=emily)', backgroundSize: 'cover', borderRadius: '50%' }}></div>
                 <p>Hi, user<br/>let's get stated</p>
               </div>
               <Link to="/register" className="btn-primary full-width" style={{ display: 'block', textAlign: 'center' }}>Join now</Link>
