@@ -4,14 +4,16 @@ import { fetchFeaturedProducts } from '../api/productApi';
 import ProductCard from '../components/ProductCard';
 import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 import './Home.css';
-import { Mail, ArrowRight } from 'lucide-react';
+import { Mail, ArrowRight, User } from 'lucide-react';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { showToast } = useToast();
+  const { isAuthenticated, user, logoutUser } = useAuth();
 
   useEffect(() => {
     document.title = "Brand | Latest Trending Electronics";
@@ -58,12 +60,29 @@ const Home = () => {
           </div>
           <div className="hero-right">
             <div className="user-card">
-              <div className="user-info">
-                <div className="user-avatar" style={{ backgroundImage: 'url(https://i.pravatar.cc/150?u=emily)', backgroundSize: 'cover', borderRadius: '50%' }}></div>
-                <p>Hi, user<br/>let's get stated</p>
-              </div>
-              <Link to="/register" className="btn-primary full-width" style={{ display: 'block', textAlign: 'center' }}>Join now</Link>
-              <Link to="/login" className="btn-outline full-width" style={{ display: 'block', textAlign: 'center' }}>Log in</Link>
+              {isAuthenticated ? (
+                <>
+                  <div className="user-info">
+                    <div className="user-avatar" style={{ backgroundColor: 'var(--color-primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', fontSize: '18px', fontWeight: 'bold' }}>
+                      {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                    </div>
+                    <p style={{ wordBreak: 'break-word' }}>Hi, {user?.name?.split(' ')[0] || 'User'}<br/>welcome back!</p>
+                  </div>
+                  <Link to="/profile" className="btn-primary full-width" style={{ display: 'block', textAlign: 'center' }}>My Profile</Link>
+                  <button onClick={logoutUser} className="btn-outline full-width" style={{ display: 'block', textAlign: 'center', marginTop: '8px' }}>Log out</button>
+                </>
+              ) : (
+                <>
+                  <div className="user-info">
+                    <div className="user-avatar" style={{ backgroundColor: '#E3E8EE', color: '#8B96A5', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
+                      <User size={24} />
+                    </div>
+                    <p>Hi, user<br/>let's get started</p>
+                  </div>
+                  <Link to="/register" className="btn-primary full-width" style={{ display: 'block', textAlign: 'center' }}>Join now</Link>
+                  <Link to="/login" className="btn-outline full-width" style={{ display: 'block', textAlign: 'center', marginTop: '8px' }}>Log in</Link>
+                </>
+              )}
             </div>
             <div className="offer-card orange">
               <p>Get US $10 off with a new supplier</p>

@@ -103,8 +103,10 @@ const Navbar = () => {
                 <div className="user-avatar-small">
                   {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                 </div>
-                <span>{user?.name?.split(' ')[0] || 'Account'}</span>
-                <ChevronDown size={14} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                  <span>{user?.name?.split(' ')[0] || 'Account'}</span>
+                  <ChevronDown size={12} />
+                </div>
               </button>
               {showUserDropdown && (
                 <div className="user-dropdown">
