@@ -124,7 +124,7 @@ const ProductListing = () => {
   };
 
   return (
-    <div className="product-listing-page container">
+    <div className="product-listing-page container page-animate">
       {/* Breadcrumb */}
       <div className="breadcrumb">
         <span>Home</span>

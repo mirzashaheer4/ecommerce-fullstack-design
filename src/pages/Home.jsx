@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { fetchFeaturedProducts } from '../api/productApi';
 import ProductCard from '../components/ProductCard';
 import ProductCardSkeleton from '../components/ProductCardSkeleton';
+import { useToast } from '../context/ToastContext';
 import './Home.css';
 import { Mail, ArrowRight } from 'lucide-react';
 
@@ -10,6 +11,7 @@ const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     document.title = "Brand | Latest Trending Electronics";
@@ -29,7 +31,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home-page">
+    <div className="home-page page-animate">
       {/* Hero Section */}
       <section className="hero-section container">
         <div className="hero-content">
@@ -167,7 +169,7 @@ const Home = () => {
             <h2>An easy way to send requests to all suppliers</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
           </div>
-          <form className="quotes-form" onSubmit={(e) => { e.preventDefault(); alert('Inquiry sent successfully!'); }}>
+          <form className="quotes-form" onSubmit={(e) => { e.preventDefault(); showToast('Inquiry sent successfully! We will get back to you soon.', 'success'); e.target.reset(); }}>
             <h3>Send quote to suppliers</h3>
             <input type="text" placeholder="What item you need?" required />
             <textarea placeholder="Type more details" rows="3" required></textarea>
@@ -185,7 +187,7 @@ const Home = () => {
         <div className="container newsletter-content">
           <h3>Subscribe on our newsletter</h3>
           <p>Get daily news on upcoming offers from many suppliers all over the world</p>
-          <form className="newsletter-form" onSubmit={(e) => { e.preventDefault(); alert('Subscribed successfully!'); }}>
+          <form className="newsletter-form" onSubmit={(e) => { e.preventDefault(); showToast('Subscribed successfully! Welcome aboard.', 'success'); e.target.reset(); }}>
             <div className="input-wrapper">
               <Mail size={20} color="#8B96A5" />
               <input type="email" placeholder="Email" required />

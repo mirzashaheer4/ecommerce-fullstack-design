@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchProductById, fetchRelatedProducts } from '../api/productApi';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
+import { useToast } from '../context/ToastContext';
 import ProductDetailsSkeleton from '../components/ProductDetailsSkeleton';
 import './ProductDetails.css';
 import { ChevronRight, Star, Heart, Check, MessageSquare, Shield, Globe, ArrowLeft } from 'lucide-react';
@@ -9,6 +11,8 @@ import { ChevronRight, Star, Heart, Check, MessageSquare, Shield, Globe, ArrowLe
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+  const { showToast } = useToast();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,11 +74,17 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     addToCart(product);
-    alert(`${product.name} added to cart!`);
+    showToast(`${product.name} added to cart!`, 'success');
+  };
+
+  const handleToggleWishlist = () => {
+    toggleWishlist(product);
+    const msg = isInWishlist(product._id) ? 'Removed from wishlist' : 'Added to wishlist';
+    showToast(msg, 'info');
   };
 
   return (
-    <div className="product-details-page container">
+    <div className="product-details-page container page-animate">
       {/* Breadcrumb */}
       <div className="breadcrumb">
         <span>Home</span>
@@ -192,8 +202,8 @@ const ProductDetails = () => {
             <button className="btn-primary full-width" onClick={handleAddToCart}>Add to cart</button>
             <Link to="/profile" className="btn-outline full-width" style={{ display: 'block', textAlign: 'center' }}>Seller's profile</Link>
           </div>
-          <button className="save-later-btn" onClick={() => alert('Product saved for later!')}>
-            <Heart size={20} color="#0D6EFD" /> Save for later
+          <button className={`save-later-btn ${isInWishlist(product._id) ? 'wishlisted' : ''}`} onClick={handleToggleWishlist}>
+            <Heart size={20} fill={isInWishlist(product._id) ? '#0D6EFD' : 'none'} color="#0D6EFD" /> {isInWishlist(product._id) ? 'Saved' : 'Save for later'}
           </button>
         </div>
       </div>

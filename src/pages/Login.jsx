@@ -43,8 +43,8 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
+    <div className="auth-page page-animate">
+      <div className="auth-card card-animate">
         <div className="auth-header">
           <div className="auth-icon">
             <LogIn size={28} color="var(--color-primary)" />

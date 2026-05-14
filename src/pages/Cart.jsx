@@ -1,19 +1,29 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 import './Cart.css';
 import { ArrowLeft, Lock, MessageSquare, Truck, ShoppingCart } from 'lucide-react';
 
 const Cart = () => {
   const { cartItems, cartTotal, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
 
   useEffect(() => {
     document.title = "My Cart | Brand eCommerce";
   }, []);
 
+  // Reset coupon when cart is cleared
+  useEffect(() => {
+    if (cartItems.length === 0) setCouponApplied(false);
+  }, [cartItems]);
+
   if (cartItems.length === 0) {
     return (
-      <div className="cart-page container empty-state">
+      <div className="cart-page container empty-state page-animate">
         <div className="empty-cart-content">
           <div className="empty-icon-circle">
             <ShoppingCart size={48} color="#8B96A5" />
@@ -28,13 +38,27 @@ const Cart = () => {
     );
   }
 
-  const discount = 60;
-  const tax = 14;
   const subtotal = cartTotal;
-  const total = subtotal - discount + tax;
+  const couponDiscount = couponApplied ? subtotal * 0.10 : 0;
+  const tax = 14;
+  const total = subtotal - couponDiscount + tax;
+
+  const handleCoupon = (e) => {
+    e.preventDefault();
+    if (!couponCode.trim()) {
+      showToast('Please enter a coupon code', 'error');
+      return;
+    }
+    setCouponApplied(true);
+    showToast('Coupon applied! 10% discount added', 'success');
+  };
+
+  const handleCheckout = () => {
+    navigate('/order-confirmation');
+  };
 
   return (
-    <div className="cart-page container">
+    <div className="cart-page container page-animate">
       <h2 className="page-title">My cart ({cartItems.length})</h2>
 
       <div className="cart-layout">
@@ -57,7 +81,7 @@ const Cart = () => {
                   <div className="item-actions-row">
                     <div className="item-actions">
                       <button className="action-btn error-text" onClick={() => removeFromCart(item._id)}>Remove</button>
-                      <button className="action-btn text-primary" onClick={() => alert('Item saved for later')}>Save for later</button>
+                      <button className="action-btn text-primary" onClick={() => showToast('Item saved for later', 'info')}>Save for later</button>
                     </div>
                     <select
                       className="qty-select"
@@ -77,7 +101,7 @@ const Cart = () => {
               <Link to="/products" className="btn-primary with-icon">
                 <ArrowLeft size={18} /> Back to shop
               </Link>
-              <button className="btn-outline" onClick={clearCart}>Remove all</button>
+              <button className="btn-outline" onClick={() => { clearCart(); showToast('Cart cleared', 'info'); }}>Remove all</button>
             </div>
           </div>
 
@@ -87,21 +111,21 @@ const Cart = () => {
               <div className="badge-icon"><Lock size={20} color="#8B96A5" /></div>
               <div className="badge-text">
                 <h5>Secure payment</h5>
-                <p>Have you ever finally just</p>
+                <p>Your payment info is protected</p>
               </div>
             </div>
             <div className="badge-item">
               <div className="badge-icon"><MessageSquare size={20} color="#8B96A5" /></div>
               <div className="badge-text">
                 <h5>Customer support</h5>
-                <p>Have you ever finally just</p>
+                <p>24/7 help when you need it</p>
               </div>
             </div>
             <div className="badge-item">
               <div className="badge-icon"><Truck size={20} color="#8B96A5" /></div>
               <div className="badge-text">
                 <h5>Free delivery</h5>
-                <p>Have you ever finally just</p>
+                <p>Free shipping on orders over $50</p>
               </div>
             </div>
           </div>
@@ -110,7 +134,7 @@ const Cart = () => {
           <div className="discount-banner">
             <div className="banner-text-content">
               <h2>Super discount on more than 100 USD</h2>
-              <p>Have you ever finally just write dummy info</p>
+              <p>Get exclusive deals on bulk orders</p>
             </div>
             <Link to="/products" className="btn-secondary">Shop now</Link>
           </div>
@@ -119,11 +143,19 @@ const Cart = () => {
 
         {/* Sidebar */}
         <div className="cart-sidebar">
-          <form className="coupon-card" onSubmit={(e) => { e.preventDefault(); alert('Coupon applied!'); }}>
+          <form className="coupon-card" onSubmit={handleCoupon}>
             <p>Have a coupon?</p>
             <div className="coupon-input">
-              <input type="text" placeholder="Add coupon" required />
-              <button type="submit" className="btn-outline">Apply</button>
+              <input
+                type="text"
+                placeholder="Add coupon"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                disabled={couponApplied}
+              />
+              <button type="submit" className="btn-outline" disabled={couponApplied}>
+                {couponApplied ? 'Applied' : 'Apply'}
+              </button>
             </div>
           </form>
 
@@ -132,10 +164,12 @@ const Cart = () => {
               <span>Subtotal:</span>
               <span>${subtotal.toFixed(2)}</span>
             </div>
-            <div className="summary-row">
-              <span>Discount:</span>
-              <span className="text-error">- ${discount.toFixed(2)}</span>
-            </div>
+            {couponApplied && (
+              <div className="summary-row">
+                <span>Coupon (10%):</span>
+                <span className="text-error">- ${couponDiscount.toFixed(2)}</span>
+              </div>
+            )}
             <div className="summary-row">
               <span>Tax:</span>
               <span className="text-success">+ ${tax.toFixed(2)}</span>
@@ -145,7 +179,7 @@ const Cart = () => {
               <span>Total:</span>
               <span>${total.toFixed(2)}</span>
             </div>
-            <button className="btn-success full-width" style={{ marginTop: '20px', padding: '12px', fontSize: '18px' }} onClick={() => alert('Proceeding to checkout...')}>
+            <button className="btn-success full-width" style={{ marginTop: '20px', padding: '12px', fontSize: '18px' }} onClick={handleCheckout}>
               Checkout
             </button>
             <div className="payment-methods">

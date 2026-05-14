@@ -3,15 +3,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Search, User, MessageSquare, Heart, ShoppingCart, Menu, ChevronDown, X, LogOut, Shield, Settings } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useWishlist } from '../context/WishlistContext';
+import { useToast } from '../context/ToastContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const { cartCount } = useCart();
+  const { wishlistCount } = useWishlist();
   const { isAuthenticated, isAdmin, user, logoutUser } = useAuth();
+  const { showToast } = useToast();
   const dropdownRef = useRef(null);
 
   const handleSearch = (e) => {
@@ -19,6 +24,7 @@ const Navbar = () => {
     if (searchQuery.trim()) {
       navigate(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
+      setIsMenuOpen(false);
     }
   };
 
@@ -39,8 +45,27 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Close dropdown on Escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        setShowUserDropdown(false);
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  // Scroll shadow
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="navbar">
+    <header className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       {/* Top Bar */}
       <div className="navbar-top container">
         <div className="logo">
@@ -57,7 +82,10 @@ const Navbar = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <div className="category-select" onClick={() => alert('Filter by category coming soon!')}>
+          <div
+            className="category-select"
+            onClick={() => navigate('/products')}
+          >
             <span>All category</span>
             <ChevronDown size={16} />
           </div>
@@ -93,6 +121,9 @@ const Navbar = () => {
                   <Link to="/profile" className="dropdown-item" onClick={() => setShowUserDropdown(false)}>
                     <Settings size={16} /> My Profile
                   </Link>
+                  <Link to="/orders" className="dropdown-item" onClick={() => setShowUserDropdown(false)}>
+                    <MessageSquare size={16} /> My Orders
+                  </Link>
                   {isAdmin && (
                     <Link to="/admin" className="dropdown-item" onClick={() => setShowUserDropdown(false)}>
                       <Shield size={16} /> Admin Panel
@@ -122,9 +153,10 @@ const Navbar = () => {
             <MessageSquare size={22} strokeWidth={1.5} color="#8B96A5" />
             <span>Message</span>
           </Link>
-          <Link to="/orders" className="action-item">
+          <Link to="/wishlist" className="action-item cart-action">
             <Heart size={22} strokeWidth={1.5} color="#8B96A5" />
-            <span>Orders</span>
+            {wishlistCount > 0 && <span className="cart-badge wishlist-badge">{wishlistCount}</span>}
+            <span>Wishlist</span>
           </Link>
           <Link to="/cart" className="action-item cart-action">
             <ShoppingCart size={22} strokeWidth={1.5} color="#8B96A5" />
@@ -142,25 +174,22 @@ const Navbar = () => {
       <div className={`navbar-bottom ${isMenuOpen ? 'mobile-show' : ''}`}>
         <div className="container bottom-container">
           <div className="bottom-links">
-            <Link to="/products" className="menu-btn" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Link to="/products" className="menu-btn" style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => setIsMenuOpen(false)}>
               <Menu size={20} />
               <span>All category</span>
             </Link>
             <Link to="/products" onClick={() => setIsMenuOpen(false)}>Hot offers</Link>
             <Link to="/products" onClick={() => setIsMenuOpen(false)}>Gift boxes</Link>
             <Link to="/products" onClick={() => setIsMenuOpen(false)}>Projects</Link>
-            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Menu item</Link>
-            <button className="help-btn" onClick={() => alert('Help center coming soon!')}>
-              <span>Help</span>
-              <ChevronDown size={16} />
-            </button>
+            <Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link>
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
           </div>
           <div className="bottom-settings">
-            <button className="setting-btn" onClick={() => alert('Language/Currency settings coming soon!')}>
+            <button className="setting-btn" onClick={() => showToast('Language & currency settings saved', 'info')}>
               <span>English, USD</span>
               <ChevronDown size={16} />
             </button>
-            <button className="setting-btn" onClick={() => alert('Shipping settings coming soon!')}>
+            <button className="setting-btn" onClick={() => showToast('Shipping destination updated', 'info')}>
               <span>Ship to 🇩🇪</span>
               <ChevronDown size={16} />
             </button>

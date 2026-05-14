@@ -56,7 +56,7 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="admin-dashboard">
+    <div className="admin-dashboard page-animate">
       <h2 className="admin-page-title">Dashboard</h2>
 
       <div className="stats-grid">

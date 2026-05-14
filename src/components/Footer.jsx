@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronUp } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
 import './Footer.css';
 
 // Inline SVGs for brand icons not present in lucide-react
@@ -40,6 +41,13 @@ const YoutubeIcon = ({ size = 18 }) => (
 );
 
 const Footer = () => {
+  const { showToast } = useToast();
+
+  const handleToast = (msg) => (e) => {
+    e.preventDefault();
+    showToast(msg, 'info');
+  };
+
   return (
     <footer className="footer">
       <div className="container">
@@ -53,11 +61,11 @@ const Footer = () => {
               Best information about the company gies here but now lorem ipsum is
             </p>
             <div className="social-links">
-              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Facebook link clicked'); }}><FacebookIcon size={18} /></a>
-              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Twitter link clicked'); }}><TwitterIcon size={18} /></a>
-              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Linkedin link clicked'); }}><LinkedinIcon size={18} /></a>
-              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Instagram link clicked'); }}><InstagramIcon size={18} /></a>
-              <a href="#" className="social-icon" onClick={(e) => { e.preventDefault(); alert('Youtube link clicked'); }}><YoutubeIcon size={18} /></a>
+              <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer"><FacebookIcon size={18} /></a>
+              <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer"><TwitterIcon size={18} /></a>
+              <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer"><LinkedinIcon size={18} /></a>
+              <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer"><InstagramIcon size={18} /></a>
+              <a href="https://youtube.com" className="social-icon" target="_blank" rel="noopener noreferrer"><YoutubeIcon size={18} /></a>
             </div>
           </div>
           
@@ -65,38 +73,38 @@ const Footer = () => {
             <div className="footer-col">
               <h4>About</h4>
               <Link to="/about">About Us</Link>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Find store'); }}>Find store</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Categories'); }}>Categories</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Blogs'); }}>Blogs</a>
+              <a href="#" onClick={handleToast('Store locator will be available soon')}>Find store</a>
+              <Link to="/products">Categories</Link>
+              <a href="#" onClick={handleToast('Blog is coming soon')}>Blogs</a>
             </div>
             <div className="footer-col">
               <h4>Partnership</h4>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('About Us'); }}>About Us</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Find store'); }}>Find store</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Categories'); }}>Categories</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Blogs'); }}>Blogs</a>
+              <Link to="/about">About Us</Link>
+              <a href="#" onClick={handleToast('Store locator will be available soon')}>Find store</a>
+              <Link to="/products">Categories</Link>
+              <a href="#" onClick={handleToast('Blog is coming soon')}>Blogs</a>
             </div>
             <div className="footer-col">
               <h4>Information</h4>
-              <Link to="/help">Help Center</Link>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Money Refund'); }}>Money Refund</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Shipping'); }}>Shipping</a>
+              <Link to="/contact">Help Center</Link>
+              <a href="#" onClick={handleToast('Refund policy details will be available soon')}>Money Refund</a>
+              <a href="#" onClick={handleToast('Shipping policy will be available soon')}>Shipping</a>
               <Link to="/contact">Contact us</Link>
             </div>
             <div className="footer-col">
               <h4>For users</h4>
               <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>
-              <a href="#" onClick={(e) => { e.preventDefault(); alert('Settings'); }}>Settings</a>
+              <a href="#" onClick={handleToast('Settings page will be available soon')}>Settings</a>
               <Link to="/orders">My Orders</Link>
             </div>
             <div className="footer-col">
               <h4>Get app</h4>
               <div className="app-links">
-                <a href="#" onClick={(e) => { e.preventDefault(); alert('App Store link'); }}>
+                <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" style={{ height: '40px' }} />
                 </a>
-                <a href="#" onClick={(e) => { e.preventDefault(); alert('Google Play link'); }}>
+                <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" style={{ height: '40px' }} />
                 </a>
               </div>
@@ -106,9 +114,9 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <div className="container footer-bottom-content">
-            <p>© 2023 Ecommerce.</p>
+            <p>© 2024 Ecommerce.</p>
             <div className="bottom-settings">
-              <button className="setting-btn" onClick={() => alert('Language changed')}>
+              <button className="setting-btn" onClick={() => showToast('Language preference saved', 'info')}>
                 <span className="flag">🇺🇸</span> English <ChevronUp size={16} />
               </button>
             </div>

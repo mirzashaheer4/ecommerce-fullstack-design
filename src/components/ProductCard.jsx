@@ -2,18 +2,30 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Star } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
+import { useToast } from '../context/ToastContext';
 import './ProductCard.css';
 
 const ProductCard = ({ product, variant = 'grid' }) => {
   const { _id, id, name, price, originalPrice, image, images, rating, reviewCount, description, freeShipping } = product;
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+  const { showToast } = useToast();
   const productId = _id || id;
   const productImage = images?.[0] || image;
+  const wishlisted = isInWishlist(productId);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product);
+  };
+
+  const handleToggleWishlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist({ ...product, _id: productId });
+    showToast(wishlisted ? 'Removed from wishlist' : 'Added to wishlist', 'info');
   };
 
   const renderStars = () => {
@@ -36,7 +48,9 @@ const ProductCard = ({ product, variant = 'grid' }) => {
         <div className="product-info">
           <div className="info-top">
             <h3 className="product-name">{name}</h3>
-            <button className="favorite-btn" onClick={handleAddToCart} title="Add to cart"><Heart size={20} color="#0D6EFD" /></button>
+            <button className={`favorite-btn ${wishlisted ? 'wishlisted' : ''}`} onClick={handleToggleWishlist} title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}>
+              <Heart size={20} fill={wishlisted ? '#0D6EFD' : 'none'} color="#0D6EFD" />
+            </button>
           </div>
           <div className="product-price-section">
             <span className="current-price">${price.toFixed(2)}</span>
@@ -65,6 +79,9 @@ const ProductCard = ({ product, variant = 'grid' }) => {
     <Link to={`/products/${productId}`} className="product-card grid-variant" style={{ textDecoration: 'none' }}>
       <div className="product-image-container">
         <img src={productImage} alt={name} className="product-image" />
+        <button className={`grid-wishlist-btn ${wishlisted ? 'wishlisted' : ''}`} onClick={handleToggleWishlist} title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}>
+          <Heart size={18} fill={wishlisted ? '#0D6EFD' : 'none'} color={wishlisted ? '#0D6EFD' : '#8B96A5'} />
+        </button>
       </div>
       <div className="product-info">
         <div className="product-price-section">
