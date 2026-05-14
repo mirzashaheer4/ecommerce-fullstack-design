@@ -2,11 +2,13 @@ import React, { useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CheckCircle, ShoppingBag, MapPin } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import './OrderConfirmation.css';
 
 const OrderConfirmation = () => {
   const { cartItems, cartTotal, clearCart } = useCart();
+  const { user } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -15,12 +17,25 @@ const OrderConfirmation = () => {
   }, []);
 
   useEffect(() => {
-    document.title = 'Order Confirmed | Brand eCommerce';
-    // Clear cart after order is placed
+    document.title = 'Order Confirmed | E-commerce Store';
+    
+    // Save order and clear cart
     if (cartItems.length > 0) {
+      const newOrder = {
+        id: orderNumber,
+        date: new Date().toISOString(),
+        items: [...cartItems],
+        total: cartTotal,
+        status: 'Processing'
+      };
+      
+      const storageKey = user ? `ecommerce_orders_${user._id}` : 'ecommerce_orders_guest';
+      const existingOrders = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      localStorage.setItem(storageKey, JSON.stringify([newOrder, ...existingOrders]));
+      
       clearCart();
     }
-  }, []);
+  }, [cartItems, cartTotal, orderNumber, user, clearCart]);
 
   return (
     <div className="order-confirmation-page page-animate">

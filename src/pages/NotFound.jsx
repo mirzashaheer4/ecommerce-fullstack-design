@@ -5,7 +5,7 @@ import './NotFound.css';
 
 const NotFound = () => {
   useEffect(() => {
-    document.title = 'Page Not Found | Brand eCommerce';
+    document.title = 'Page Not Found | E-commerce Store';
   }, []);
 
   return (

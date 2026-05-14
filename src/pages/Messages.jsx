@@ -5,7 +5,7 @@ import './EmptyState.css';
 
 const Messages = () => {
   useEffect(() => {
-    document.title = 'Messages | Brand eCommerce';
+    document.title = 'Messages | E-commerce Store';
   }, []);
 
   return (

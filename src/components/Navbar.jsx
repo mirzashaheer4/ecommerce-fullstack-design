@@ -142,9 +142,8 @@ const Navbar = () => {
         <div className="drawer-content">
           <div className="drawer-links">
             <Link to="/products" onClick={() => setIsMenuOpen(false)}>All category</Link>
-            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Hot offers</Link>
-            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Gift boxes</Link>
-            <Link to="/products" onClick={() => setIsMenuOpen(false)}>Projects</Link>
+            <Link to="/products?category=Hot offers" onClick={() => setIsMenuOpen(false)}>Hot offers</Link>
+            <Link to="/products?category=Gift boxes" onClick={() => setIsMenuOpen(false)}>Gift boxes</Link>
             <Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
           </div>
@@ -352,9 +351,8 @@ const Navbar = () => {
               <Menu size={20} />
               <span>All category</span>
             </Link>
-            <Link to="/products">Hot offers</Link>
-            <Link to="/products">Gift boxes</Link>
-            <Link to="/products">Projects</Link>
+            <Link to="/products?category=Hot offers">Hot offers</Link>
+            <Link to="/products?category=Gift boxes">Gift boxes</Link>
             <Link to="/about">About</Link>
             <Link to="/contact">Contact</Link>
           </div>

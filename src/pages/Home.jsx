@@ -16,7 +16,7 @@ const Home = () => {
   const { isAuthenticated, user, logoutUser } = useAuth();
 
   useEffect(() => {
-    document.title = "Brand | Latest Trending Electronics";
+    document.title = "E-commerce | Home";
 
     const loadFeatured = async () => {
       setLoading(true);
@@ -39,15 +39,15 @@ const Home = () => {
         <div className="hero-content">
           <div className="hero-sidebar">
             <ul className="category-list">
-              <li className="active"><Link to="/products">Automobiles</Link></li>
-              <li><Link to="/products">Clothes and wear</Link></li>
-              <li><Link to="/products">Home interiors</Link></li>
-              <li><Link to="/products">Computer and tech</Link></li>
-              <li><Link to="/products">Tools, equipments</Link></li>
-              <li><Link to="/products">Sports and outdoor</Link></li>
-              <li><Link to="/products">Animal and pets</Link></li>
-              <li><Link to="/products">Machinery tools</Link></li>
-              <li><Link to="/products">More category</Link></li>
+              <li className="active"><Link to="/products?category=Electronics">Electronics</Link></li>
+              <li><Link to="/products?category=Clothing">Clothing</Link></li>
+              <li><Link to="/products?category=Accessories">Accessories</Link></li>
+              <li><Link to="/products?category=Home & Garden">Home & Garden</Link></li>
+              <li><Link to="/products?category=Sports & Outdoor">Sports & Outdoor</Link></li>
+              <li><Link to="/products?category=Beauty & Health">Beauty & Health</Link></li>
+              <li><Link to="/products?category=Gift boxes">Gift boxes</Link></li>
+              <li><Link to="/products?category=Hot offers">Hot offers</Link></li>
+              <li><Link to="/products">All Categories</Link></li>
             </ul>
           </div>
           <div className="hero-banner" style={{ backgroundColor: '#A2D2C9', overflow: 'hidden' }}>
@@ -144,16 +144,16 @@ const Home = () => {
           </div>
           <div className="grid-items">
             {[
-              { name: 'Soft chairs', price: '19', img: 'https://cdn.dummyjson.com/products/images/furniture/Knoll%20Saarinen%20Executive%20Conference%20Chair/thumbnail.png' },
-              { name: 'Sofa & chair', price: '19', img: 'https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Sofa/thumbnail.png' },
-              { name: 'Kitchen dishes', price: '19', img: 'https://cdn.dummyjson.com/products/images/kitchen-accessories/Plate/thumbnail.png' },
-              { name: 'Smart watches', price: '19', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Watch%20Series%204%20Gold/thumbnail.png' },
-              { name: 'Kitchen mixer', price: '100', img: 'https://cdn.dummyjson.com/products/images/kitchen-accessories/Hand%20Blender/thumbnail.png' },
-              { name: 'Blenders', price: '39', img: 'https://cdn.dummyjson.com/products/images/kitchen-accessories/Boxed%20Blender/thumbnail.png' },
-              { name: 'Home appliance', price: '19', img: 'https://cdn.dummyjson.com/products/images/home-decoration/Plant%20Pot/thumbnail.png' },
-              { name: 'Coffee maker', price: '10', img: 'https://cdn.dummyjson.com/products/images/home-decoration/Table%20Lamp/thumbnail.png' },
+              { name: 'Smart LED Lamp', price: '28', img: 'https://cdn.dummyjson.com/product-images/home-decoration/table-lamp/1.webp', q: 'lamp' },
+              { name: 'Indoor Plant Pot', price: '18', img: 'https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/1.webp', q: 'plant' },
+              { name: 'Microwave Oven', price: '150', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/microwave-oven/1.webp', q: 'microwave' },
+              { name: 'Memory Foam Pillow', price: '35', img: 'https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/1.webp', q: 'pillow' },
+              { name: 'Kitchen Knife Set', price: '65', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/knife/1.webp', q: 'knife' },
+              { name: 'Mountain Bike Helmet', price: '42', img: 'https://cdn.dummyjson.com/product-images/sports-accessories/cricket-helmet/1.webp', q: 'helmet' },
+              { name: 'Golf Ball Set', price: '25', img: 'https://cdn.dummyjson.com/product-images/sports-accessories/golf-ball/1.webp', q: 'golf' },
+              { name: 'Running Shoes', price: '120', img: 'https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/1.webp', q: 'shoes' },
             ].map((item, i) => (
-              <Link to="/products" key={i} className="grid-item">
+              <Link to={`/products?q=${item.q}`} key={i} className="grid-item">
                 <div className="item-text">
                   <h4>{item.name}</h4>
                   <p>From{'\n'}USD {item.price}</p>
@@ -181,16 +181,16 @@ const Home = () => {
           </div>
           <div className="grid-items">
             {[
-              { name: 'Smart watches', price: '19', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Watch%20Series%204%20Gold/thumbnail.png' },
-              { name: 'Cameras', price: '89', img: 'https://cdn.dummyjson.com/products/images/smartphones/iPhone%2013%20Pro/thumbnail.png' },
-              { name: 'Headphones', price: '10', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Beats%20Studio3%20Wireless/thumbnail.png' },
-              { name: 'Smart watches', price: '90', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Airpods/thumbnail.png' },
-              { name: 'Gaming set', price: '35', img: 'https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen/thumbnail.png' },
-              { name: 'Laptops & PC', price: '340', img: 'https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014/thumbnail.png' },
-              { name: 'Smartphones', price: '19', img: 'https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S10/thumbnail.png' },
-              { name: 'Electric kattle', price: '240', img: 'https://cdn.dummyjson.com/products/images/smartphones/iPhone%20X/thumbnail.png' },
+              { name: 'Galaxy S24 Ultra', price: '1199', img: 'https://cdn.dummyjson.com/product-images/smartphones/samsung-galaxy-s10/1.webp', q: 'galaxy' },
+              { name: 'AirPods Pro 2', price: '249', img: 'https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/1.webp', q: 'airpods' },
+              { name: 'MateBook D15', price: '699', img: 'https://cdn.dummyjson.com/product-images/laptops/huawei-matebook-x-pro/1.webp', q: 'matebook' },
+              { name: 'Redmi 8 Original', price: '32', img: 'https://cdn.dummyjson.com/product-images/smartphones/oppo-a57/1.webp', q: 'redmi' },
+              { name: 'Gaming Headset', price: '8', img: 'https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods-max-silver/1.webp', q: 'headset' },
+              { name: 'Apple Watch', price: '199', img: 'https://cdn.dummyjson.com/product-images/mobile-accessories/apple-watch-series-4-gold/1.webp', q: 'watch' },
+              { name: 'Ring Light', price: '45', img: 'https://cdn.dummyjson.com/product-images/mobile-accessories/selfie-lamp-with-iphone/1.webp', q: 'light' },
+              { name: 'Camera Pedestal', price: '499', img: 'https://cdn.dummyjson.com/product-images/mobile-accessories/tv-studio-camera-pedestal/1.webp', q: 'camera' },
             ].map((item, i) => (
-              <Link to="/products" key={i} className="grid-item">
+              <Link to={`/products?q=${item.q}`} key={i} className="grid-item">
                 <div className="item-text">
                   <h4>{item.name}</h4>
                   <p>From{'\n'}USD {item.price}</p>
@@ -227,7 +227,7 @@ const Home = () => {
         <div className="quotes-content">
           <div className="quotes-text">
             <h2>An easy way to send requests to all suppliers</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+            <p>Connect with top suppliers and request customized quotes for your unique business needs.</p>
           </div>
           <form className="quotes-form" onSubmit={(e) => { e.preventDefault(); showToast('Inquiry sent successfully! We will get back to you soon.', 'success'); e.target.reset(); }}>
             <h3>Send quote to suppliers</h3>

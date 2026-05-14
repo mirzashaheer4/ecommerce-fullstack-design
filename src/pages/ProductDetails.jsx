@@ -34,7 +34,7 @@ const ProductDetails = () => {
 
       setProduct(prod);
       setSelectedImg(prod.images?.[0] || '');
-      document.title = `${prod.name} | Brand eCommerce`;
+      document.title = `${prod.name} | E-commerce Store`;
 
       const related = await fetchRelatedProducts(id);
       setRelatedProducts(related);

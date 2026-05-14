@@ -18,7 +18,7 @@ const Login = () => {
   const from = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    document.title = 'Login | Brand eCommerce';
+    document.title = 'Login | E-commerce Store';
     if (isAuthenticated) navigate('/', { replace: true });
   }, [isAuthenticated, navigate]);
 

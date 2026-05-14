@@ -16,7 +16,7 @@ const Contact = () => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    document.title = 'Contact Us | Brand eCommerce';
+    document.title = 'Contact Us | E-commerce Store';
   }, []);
 
   const handleChange = (e) => {

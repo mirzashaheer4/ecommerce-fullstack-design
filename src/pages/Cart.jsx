@@ -13,7 +13,7 @@ const Cart = () => {
   const [couponCode, setCouponCode] = useState('');
 
   useEffect(() => {
-    document.title = "My Cart | Brand eCommerce";
+    document.title = "My Cart | E-commerce Store";
   }, []);
 
   // Reset coupon when cart is cleared

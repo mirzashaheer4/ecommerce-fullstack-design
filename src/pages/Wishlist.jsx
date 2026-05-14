@@ -14,7 +14,7 @@ const Wishlist = () => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    document.title = 'Wishlist | Brand eCommerce';
+    document.title = 'Wishlist | E-commerce Store';
   }, []);
 
   // Not logged in state

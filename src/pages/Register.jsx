@@ -17,7 +17,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'Register | Brand eCommerce';
+    document.title = 'Register | E-commerce Store';
     if (isAuthenticated) navigate('/', { replace: true });
   }, [isAuthenticated, navigate]);
 

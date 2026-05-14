@@ -12,7 +12,7 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    document.title = 'My Profile | Brand eCommerce';
+    document.title = 'My Profile | E-commerce Store';
   }, []);
 
   useEffect(() => {

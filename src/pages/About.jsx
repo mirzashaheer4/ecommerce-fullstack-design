@@ -69,7 +69,7 @@ const StatCard = ({ value, label, suffix }) => {
 
 const About = () => {
   useEffect(() => {
-    document.title = 'About Us | Brand eCommerce';
+    document.title = 'About Us | E-commerce Store';
   }, []);
 
   return (

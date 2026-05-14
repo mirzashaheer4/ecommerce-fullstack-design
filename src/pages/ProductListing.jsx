@@ -6,7 +6,7 @@ import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import './ProductListing.css';
 import { ChevronRight, ChevronDown, ChevronUp, CheckSquare, Square, LayoutGrid, List, X } from 'lucide-react';
 
-const categories = ['Electronics', 'Clothing', 'Accessories', 'Home & Garden', 'Sports & Outdoor', 'Beauty & Health'];
+const categories = ['Electronics', 'Clothing', 'Accessories', 'Home & Garden', 'Sports & Outdoor', 'Beauty & Health', 'Gift boxes', 'Hot offers'];
 const brandOptions = ['Samsung', 'Apple', 'Huawei', 'Pocco', 'Lenovo'];
 const featureOptions = ['Metallic', 'Plastic cover', '8GB Ram', 'Super power', 'Large Memory'];
 const conditionOptions = ['Any', 'Brand new', 'Refurbished', 'Old items'];
@@ -23,7 +23,7 @@ const ProductListing = () => {
   const [error, setError] = useState(null);
 
   // Filter states
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [selectedCondition, setSelectedCondition] = useState('');
@@ -35,8 +35,13 @@ const ProductListing = () => {
   const [appliedMaxPrice, setAppliedMaxPrice] = useState('');
 
   useEffect(() => {
-    document.title = "Products | Summer Clothing";
-  }, []);
+    const q = searchParams.get('q');
+    document.title = q 
+      ? `Search: ${q}` 
+      : selectedCategory 
+        ? `${selectedCategory} | Products` 
+        : "Products | E-commerce";
+  }, [searchParams, selectedCategory]);
 
   // Lock body scroll when filters drawer is open on mobile
   useEffect(() => {
@@ -49,6 +54,15 @@ const ProductListing = () => {
       document.body.style.overflow = '';
     };
   }, [showFilters]);
+
+  // Update category if URL changes (e.g. clicking navbar link while already on products page)
+  useEffect(() => {
+    const urlCategory = searchParams.get('category');
+    if (urlCategory) {
+      setSelectedCategory(urlCategory);
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
 
   // Load products when any filter, page, or search query changes
   useEffect(() => {
@@ -141,12 +155,12 @@ const ProductListing = () => {
       <div className="breadcrumb">
         <span>Home</span>
         <ChevronRight size={16} />
-        <span>Clothings</span>
-        <ChevronRight size={16} />
-        <span>Men's wear</span>
-        <ChevronRight size={16} />
         <span className="current">
-          {searchParams.get('q') ? `Search: "${searchParams.get('q')}"` : 'Summer clothing'}
+          {searchParams.get('q') 
+            ? `Search: "${searchParams.get('q')}"` 
+            : selectedCategory 
+              ? selectedCategory 
+              : 'All Products'}
         </span>
       </div>
 
