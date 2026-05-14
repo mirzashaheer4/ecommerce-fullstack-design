@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './context/ToastContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { SettingsProvider } from './context/SettingsContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Toast from './components/Toast';
 import Navbar from './components/Navbar';
@@ -30,11 +31,12 @@ import AdminProductForm from './pages/admin/AdminProductForm';
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <CartProvider>
-          <WishlistProvider>
-            <ToastProvider>
-              <Toast />
+      <SettingsProvider>
+        <AuthProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <ToastProvider>
+                <Toast />
               <Routes>
                 {/* ===== Admin Routes (no Navbar/Footer) ===== */}
                 <Route
@@ -88,10 +90,11 @@ function App() {
                   }
                 />
               </Routes>
-            </ToastProvider>
-          </WishlistProvider>
-        </CartProvider>
-      </AuthProvider>
+              </ToastProvider>
+            </WishlistProvider>
+          </CartProvider>
+        </AuthProvider>
+      </SettingsProvider>
     </Router>
   );
 }

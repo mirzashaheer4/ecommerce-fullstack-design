@@ -5,6 +5,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { useSettings } from '../context/SettingsContext';
 import './Wishlist.css';
 
 const Wishlist = () => {
@@ -12,6 +13,7 @@ const Wishlist = () => {
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
+  const { formatPrice } = useSettings();
 
   useEffect(() => {
     document.title = 'Wishlist | E-commerce Store';
@@ -71,7 +73,7 @@ const Wishlist = () => {
               </Link>
               <div className="wishlist-info">
                 <Link to={`/products/${item._id}`} className="wishlist-name">{item.name}</Link>
-                <span className="wishlist-price">${item.price?.toFixed(2)}</span>
+                <span className="wishlist-price">{formatPrice(item.price)}</span>
                 {item.category && <span className="wishlist-category">{item.category}</span>}
               </div>
               <div className="wishlist-actions">

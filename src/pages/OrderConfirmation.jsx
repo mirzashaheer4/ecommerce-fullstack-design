@@ -1,16 +1,20 @@
 import React, { useEffect, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { CheckCircle, ShoppingBag, MapPin } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { useSettings } from '../context/SettingsContext';
 import './OrderConfirmation.css';
 
 const OrderConfirmation = () => {
   const { cartItems, cartTotal, clearCart } = useCart();
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { formatPrice, currency } = useSettings();
   const navigate = useNavigate();
+  const location = useLocation();
+  const orderDetails = location.state || {};
 
   const orderNumber = useMemo(() => {
     return `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -25,7 +29,12 @@ const OrderConfirmation = () => {
         id: orderNumber,
         date: new Date().toISOString(),
         items: [...cartItems],
-        total: cartTotal,
+        total: orderDetails.orderTotal || cartTotal,
+        subtotal: orderDetails.subtotal || cartTotal,
+        shipping: orderDetails.shipping || 0,
+        tax: orderDetails.tax || 0,
+        couponDiscount: orderDetails.couponDiscount || 0,
+        currency: orderDetails.currency || currency,
         status: 'Processing'
       };
       
@@ -35,7 +44,7 @@ const OrderConfirmation = () => {
       
       clearCart();
     }
-  }, [cartItems, cartTotal, orderNumber, user, clearCart]);
+  }, [cartItems, cartTotal, orderNumber, user, clearCart, orderDetails, currency]);
 
   return (
     <div className="order-confirmation-page page-animate">
@@ -52,7 +61,7 @@ const OrderConfirmation = () => {
         <p className="order-number">Order Number: <strong>{orderNumber}</strong></p>
         <p className="order-message">Thank you for your purchase. Your order has been received and is being processed.</p>
 
-        {cartTotal > 0 && (
+        {(orderDetails.orderTotal || cartTotal) > 0 && (
           <div className="order-summary-mini">
             <div className="summary-row">
               <span>Items ordered</span>
@@ -60,7 +69,7 @@ const OrderConfirmation = () => {
             </div>
             <div className="summary-row total">
               <span>Total Amount</span>
-              <span>${cartTotal.toFixed(2)}</span>
+              <span>{formatPrice(orderDetails.orderTotal || cartTotal)}</span>
             </div>
           </div>
         )}

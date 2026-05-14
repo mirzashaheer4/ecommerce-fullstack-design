@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useToast } from '../context/ToastContext';
+import { useSettings } from '../context/SettingsContext';
 import './Navbar.css';
 
 // Solid Icons
@@ -50,13 +51,18 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
   const { isAuthenticated, isAdmin, user, logoutUser } = useAuth();
+  const { currency, setCurrency, deliveryCountry, setDeliveryCountry, currencies, countries } = useSettings();
   const { showToast } = useToast();
   const dropdownRef = useRef(null);
+  const currencyRef = useRef(null);
+  const countryRef = useRef(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -77,9 +83,9 @@ const Navbar = () => {
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setShowUserDropdown(false);
-      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setShowUserDropdown(false);
+      if (currencyRef.current && !currencyRef.current.contains(e.target)) setShowCurrencyDropdown(false);
+      if (countryRef.current && !countryRef.current.contains(e.target)) setShowCountryDropdown(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -195,12 +201,20 @@ const Navbar = () => {
           <div className="drawer-divider"></div>
 
           <div className="drawer-settings">
-            <button className="drawer-action-link" onClick={() => showToast('Language & currency settings saved', 'info')}>
-              English, USD
-            </button>
-            <button className="drawer-action-link" onClick={() => showToast('Shipping destination updated', 'info')}>
-              Ship to 🇩🇪
-            </button>
+            <select 
+              value={currency} 
+              onChange={(e) => setCurrency(e.target.value)}
+              className="drawer-select"
+            >
+              {currencies.map(c => <option key={c.code} value={c.code}>{c.code} - {c.name}</option>)}
+            </select>
+            <select 
+              value={deliveryCountry} 
+              onChange={(e) => setDeliveryCountry(e.target.value)}
+              className="drawer-select"
+            >
+              {countries.map(c => <option key={c.name} value={c.name}>{c.flag} Ship to {c.name}</option>)}
+            </select>
           </div>
         </div>
       </div>
@@ -357,14 +371,37 @@ const Navbar = () => {
             <Link to="/contact">Contact</Link>
           </div>
           <div className="bottom-settings">
-            <button className="setting-btn" onClick={() => showToast('Language & currency settings saved', 'info')}>
-              <span>English, USD</span>
-              <ChevronDown size={16} />
-            </button>
-            <button className="setting-btn" onClick={() => showToast('Shipping destination updated', 'info')}>
-              <span>Ship to 🇩🇪</span>
-              <ChevronDown size={16} />
-            </button>
+            <div className="setting-dropdown-container" ref={currencyRef}>
+              <button className="setting-btn" onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}>
+                <span>English, {currency}</span>
+                <ChevronDown size={16} />
+              </button>
+              {showCurrencyDropdown && (
+                <div className="setting-dropdown-menu">
+                  {currencies.map(c => (
+                    <div key={c.code} className={`dropdown-item ${currency === c.code ? 'active' : ''}`} onClick={() => { setCurrency(c.code); setShowCurrencyDropdown(false); }}>
+                      {c.code} - {c.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="setting-dropdown-container" ref={countryRef}>
+              <button className="setting-btn" onClick={() => setShowCountryDropdown(!showCountryDropdown)}>
+                <span>{countries.find(c => c.name === deliveryCountry)?.flag || '🌍'} Ship to {deliveryCountry}</span>
+                <ChevronDown size={16} />
+              </button>
+              {showCountryDropdown && (
+                <div className="setting-dropdown-menu">
+                  {countries.map(c => (
+                    <div key={c.name} className={`dropdown-item ${deliveryCountry === c.name ? 'active' : ''}`} onClick={() => { setDeliveryCountry(c.name); setShowCountryDropdown(false); }}>
+                      {c.flag} {c.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

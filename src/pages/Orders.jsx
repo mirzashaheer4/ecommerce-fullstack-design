@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Package, ShoppingBag, Calendar, DollarSign, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useSettings } from '../context/SettingsContext';
 import './EmptyState.css';
 
 const Orders = () => {
   const { user } = useAuth();
+  const { formatPrice } = useSettings();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const Orders = () => {
                     <Calendar size={16} /> {new Date(order.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
                   </span>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <DollarSign size={16} /> {order.total.toFixed(2)}
+                    <DollarSign size={16} /> {formatPrice(order.total)}
                   </span>
                 </div>
               </div>
@@ -65,7 +67,7 @@ const Orders = () => {
                   <img src={item.image} alt={item.name} style={{ width: '64px', height: '64px', objectFit: 'contain', border: '1px solid var(--color-border)', borderRadius: '6px', padding: '4px', backgroundColor: '#F7FAFC' }} />
                   <div style={{ flex: 1 }}>
                     <h4 style={{ fontSize: '15px', fontWeight: '500', color: 'var(--color-text-primary)', marginBottom: '4px' }}>{item.name}</h4>
-                    <p style={{ color: 'var(--color-text-muted)', fontSize: '14px' }}>Qty: {item.qty} <span style={{ margin: '0 8px' }}>|</span> ${(item.price * item.qty).toFixed(2)}</p>
+                    <p style={{ color: 'var(--color-text-muted)', fontSize: '14px' }}>Qty: {item.qty} <span style={{ margin: '0 8px' }}>|</span> {formatPrice(item.price * item.qty)}</p>
                   </div>
                 </div>
               ))}

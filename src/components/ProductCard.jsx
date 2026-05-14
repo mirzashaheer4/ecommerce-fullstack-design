@@ -4,6 +4,7 @@ import { Heart, Star } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useToast } from '../context/ToastContext';
+import { useSettings } from '../context/SettingsContext';
 import './ProductCard.css';
 
 const ProductCard = ({ product, variant = 'grid' }) => {
@@ -11,6 +12,7 @@ const ProductCard = ({ product, variant = 'grid' }) => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { showToast } = useToast();
+  const { formatPrice } = useSettings();
   const productId = _id || id;
   const productImage = images?.[0] || image;
   const wishlisted = isInWishlist(productId);
@@ -53,8 +55,8 @@ const ProductCard = ({ product, variant = 'grid' }) => {
             </button>
           </div>
           <div className="product-price-section">
-            <span className="current-price">${price.toFixed(2)}</span>
-            {originalPrice && <span className="original-price">${originalPrice.toFixed(2)}</span>}
+            <span className="current-price">{formatPrice(price)}</span>
+            {originalPrice && <span className="original-price">{formatPrice(originalPrice)}</span>}
           </div>
           <div className="product-meta">
             {renderStars()}
@@ -85,8 +87,8 @@ const ProductCard = ({ product, variant = 'grid' }) => {
       </div>
       <div className="product-info">
         <div className="product-price-section">
-          <span className="current-price">${price.toFixed(2)}</span>
-          {originalPrice && <span className="original-price">${originalPrice.toFixed(2)}</span>}
+          <span className="current-price">{formatPrice(price)}</span>
+          {originalPrice && <span className="original-price">{formatPrice(originalPrice)}</span>}
         </div>
         {renderStars()}
         <h3 className="product-name">{name}</h3>

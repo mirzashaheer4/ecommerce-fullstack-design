@@ -4,6 +4,7 @@ import { fetchProductById, fetchRelatedProducts } from '../api/productApi';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useToast } from '../context/ToastContext';
+import { useSettings } from '../context/SettingsContext';
 import ProductDetailsSkeleton from '../components/ProductDetailsSkeleton';
 import './ProductDetails.css';
 import { ChevronRight, Star, Heart, Check, MessageSquare, Shield, Globe, ArrowLeft } from 'lucide-react';
@@ -13,6 +14,7 @@ const ProductDetails = () => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { showToast } = useToast();
+  const { formatPrice } = useSettings();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -131,15 +133,15 @@ const ProductDetails = () => {
 
           <div className="price-tiers">
             <div className="tier highlight">
-              <h4>${product.price.toFixed(2)}</h4>
+              <h4>{formatPrice(product.price)}</h4>
               <p>50-100 pcs</p>
             </div>
             <div className="tier">
-              <h4>${(product.price * 0.92).toFixed(2)}</h4>
+              <h4>{formatPrice(product.price * 0.92)}</h4>
               <p>100-700 pcs</p>
             </div>
             <div className="tier">
-              <h4>${(product.price * 0.8).toFixed(2)}</h4>
+              <h4>{formatPrice(product.price * 0.8)}</h4>
               <p>700+ pcs</p>
             </div>
           </div>

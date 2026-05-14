@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
+import { useSettings } from '../context/SettingsContext';
 import './Cart.css';
 import { ArrowLeft, Lock, MessageSquare, Truck, ShoppingCart } from 'lucide-react';
 
 const Cart = () => {
   const { cartItems, cartTotal, updateQuantity, removeFromCart, clearCart } = useCart();
   const { showToast } = useToast();
+  const { formatPrice, getShippingCost, deliveryCountry, currency } = useSettings();
   const navigate = useNavigate();
   const [couponApplied, setCouponApplied] = useState(false);
   const [couponCode, setCouponCode] = useState('');
@@ -41,7 +43,8 @@ const Cart = () => {
   const subtotal = cartTotal;
   const couponDiscount = couponApplied ? subtotal * 0.10 : 0;
   const tax = 14;
-  const total = subtotal - couponDiscount + tax;
+  const shipping = getShippingCost();
+  const total = subtotal - couponDiscount + tax + shipping;
 
   const handleCoupon = (e) => {
     e.preventDefault();
@@ -54,7 +57,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    navigate('/order-confirmation');
+    navigate('/order-confirmation', { state: { orderTotal: total, subtotal, tax, shipping, couponDiscount, currency } });
   };
 
   return (
@@ -73,7 +76,11 @@ const Cart = () => {
                 <div className="item-details">
                   <div className="item-header">
                     <h4>{item.name}</h4>
-                    <span className="item-price">${(item.price * item.qty).toFixed(2)}</span>
+                  </div>
+                  <div className="item-price">
+                    <span className="current-price">{formatPrice(item.price)}</span>
+                    <br />
+                    <span className="qty-total">Total: {formatPrice(item.price * item.qty)}</span>
                   </div>
                   <p className="item-meta">Size: medium, Color: blue, Material: Plastic</p>
                   <p className="item-seller">Seller: {item.seller}</p>
@@ -162,22 +169,26 @@ const Cart = () => {
           <div className="summary-card">
             <div className="summary-row">
               <span>Subtotal:</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>{formatPrice(subtotal)}</span>
             </div>
             {couponApplied && (
               <div className="summary-row">
                 <span>Coupon (10%):</span>
-                <span className="text-error">- ${couponDiscount.toFixed(2)}</span>
+                <span className="text-error">- {formatPrice(couponDiscount)}</span>
               </div>
             )}
             <div className="summary-row">
               <span>Tax:</span>
-              <span className="text-success">+ ${tax.toFixed(2)}</span>
+              <span className="text-success">+ {formatPrice(tax)}</span>
+            </div>
+            <div className="summary-row">
+              <span>Shipping to {deliveryCountry}:</span>
+              <span className="text-success">+ {formatPrice(shipping)}</span>
             </div>
             <div className="divider"></div>
             <div className="summary-row total">
               <span>Total:</span>
-              <span>${total.toFixed(2)}</span>
+              <span>{formatPrice(total)}</span>
             </div>
             <button className="btn-success full-width" style={{ marginTop: '20px', padding: '12px', fontSize: '18px' }} onClick={handleCheckout}>
               Checkout
