@@ -183,7 +183,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Search Bar (Hidden on mobile) */}
-        <form className="search-bar desktop-search" onSubmit={handleSearch}>
+        <form className="search-bar desktop-search desktop-only" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search"
