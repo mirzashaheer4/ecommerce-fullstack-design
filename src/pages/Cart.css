@@ -352,16 +352,79 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .cart-item {
     flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+  }
+  .item-details {
+    display: flex;
+    flex-direction: column;
+  }
+  .item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .item-header h4 {
+    max-width: 100%;
   }
   .item-actions-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .item-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .action-btn {
+    flex: 1;
+    text-align: center;
+    min-height: 44px; /* Tap target */
+  }
+  .qty-select {
+    width: 100%;
+    min-height: 44px; /* Tap target */
+  }
+  .cart-bottom-actions {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+  .cart-bottom-actions .btn-primary,
+  .cart-bottom-actions .btn-outline {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
   }
   .trust-badges {
     flex-direction: column;
+    gap: 16px;
+  }
+  .badge-item {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 16px;
+    border-radius: var(--border-radius-md);
+  }
+  .discount-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 16px;
+    gap: 16px;
+  }
+  .coupon-input input {
+    height: 44px;
+    font-size: 16px;
+  }
+  .coupon-input .btn-outline {
+    padding: 0 16px;
+  }
+  .saved-card {
+    width: 100%;
   }
 }

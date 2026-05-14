@@ -138,3 +138,32 @@
     gap: 30px;
   }
 }
+
+@media (max-width: 767px) {
+  .footer-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .footer-brand {
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+  .footer-links {
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+  }
+  .footer-col {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  .app-links {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .footer-bottom-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

@@ -87,12 +87,14 @@
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ===== Shared Admin Table ===== */
 .admin-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
 }
 

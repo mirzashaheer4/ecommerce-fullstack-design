@@ -150,8 +150,15 @@
   text-decoration: underline;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 767px) {
+  .auth-page {
+    min-height: auto;
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
   .auth-card {
     padding: 24px 20px;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
   }
 }

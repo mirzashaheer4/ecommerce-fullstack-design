@@ -4,7 +4,7 @@ import { fetchAllProducts, searchProducts as searchProductsApi } from '../api/pr
 import ProductCard from '../components/ProductCard';
 import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import './ProductListing.css';
-import { ChevronRight, ChevronDown, ChevronUp, CheckSquare, Square, LayoutGrid, List } from 'lucide-react';
+import { ChevronRight, ChevronDown, ChevronUp, CheckSquare, Square, LayoutGrid, List, X } from 'lucide-react';
 
 const categories = ['Electronics', 'Clothing', 'Accessories', 'Home & Garden', 'Sports & Outdoor', 'Beauty & Health'];
 const brandOptions = ['Samsung', 'Apple', 'Huawei', 'Pocco', 'Lenovo'];
@@ -37,6 +37,18 @@ const ProductListing = () => {
   useEffect(() => {
     document.title = "Products | Summer Clothing";
   }, []);
+
+  // Lock body scroll when filters drawer is open on mobile
+  useEffect(() => {
+    if (showFilters) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showFilters]);
 
   // Load products when any filter, page, or search query changes
   useEffect(() => {
@@ -139,14 +151,29 @@ const ProductListing = () => {
       </div>
 
       <div className="listing-layout">
-        <button className="mobile-filter-btn" onClick={() => setShowFilters(!showFilters)}>
-          {showFilters ? 'Hide Filters' : 'Show Filters'}
+        <button className="mobile-filter-btn" onClick={() => setShowFilters(true)}>
+          Show Filters
         </button>
+
+        {/* Mobile Filter Overlay */}
+        <div className={`filter-overlay ${showFilters ? 'open' : ''}`} onClick={() => setShowFilters(false)}></div>
 
         {/* Sidebar Filters */}
         <aside className={`filters-sidebar ${showFilters ? 'mobile-show' : ''}`}>
           
-          {/* Category */}
+          {/* Mobile Header */}
+          <div className="filter-mobile-header">
+            <div className="drawer-handle"></div>
+            <div className="filter-header-top">
+              <h3>Filters</h3>
+              <button className="close-filter-btn" onClick={() => setShowFilters(false)}>
+                <X size={24} />
+              </button>
+            </div>
+          </div>
+
+          <div className="filter-scroll-content">
+            {/* Category */}
           <div className="filter-section">
             <div className="filter-header">
               <h3>Category</h3>
@@ -284,6 +311,23 @@ const ProductListing = () => {
                 </li>
               ))}
             </ul>
+          </div>
+          </div> {/* End filter-scroll-content */}
+
+          {/* Mobile Footer */}
+          <div className="filter-mobile-footer">
+            <button className="clear-all-btn" onClick={() => {
+              setSelectedCategory('');
+              setSelectedBrands([]);
+              setSelectedFeatures([]);
+              setSelectedCondition('');
+              setSelectedRating('');
+              setAppliedMinPrice('');
+              setAppliedMaxPrice('');
+              setMinPriceInput('');
+              setMaxPriceInput('');
+            }}>Clear all</button>
+            <button className="btn-primary full-width" onClick={() => setShowFilters(false)}>Apply Filters</button>
           </div>
         </aside>
 

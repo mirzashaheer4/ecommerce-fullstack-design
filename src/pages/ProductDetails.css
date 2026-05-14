@@ -41,6 +41,13 @@
 .thumbnail-list {
   display: flex;
   gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.thumbnail-list::-webkit-scrollbar {
+  display: none;
 }
 
 .thumbnail {
@@ -459,14 +466,22 @@
   }
 }
 
-@media (max-width: 768px) {
-  .related-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 767px) {
+  .details-card {
+    padding: 16px;
+    gap: 16px;
   }
-  .discount-banner {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
+  .main-image {
+    height: 300px;
+    padding: 12px;
+  }
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+  }
+  .detail-title {
+    font-size: 20px;
   }
   .price-tiers {
     flex-direction: column;
@@ -474,5 +489,39 @@
   .tier {
     border-right: none;
     border-bottom: 1px solid white;
+  }
+  .supplier-card {
+    max-width: 100%;
+  }
+  .btn-primary.full-width, .btn-outline.full-width, .save-later-btn {
+    min-height: 48px;
+    justify-content: center;
+  }
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .discount-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 24px 16px;
+  }
+  .spec-label {
+    width: 100px;
+  }
+  .tabs-header {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs-header::-webkit-scrollbar {
+    display: none;
+  }
+  .tab-btn {
+    white-space: nowrap;
+    min-height: 48px;
+  }
+  .small-product {
+    width: 100%;
   }
 }

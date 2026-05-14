@@ -115,8 +115,21 @@
   color: var(--color-primary);
 }
 
-@media (max-width: 480px) {
-  .order-card { padding: 32px 20px; }
+@media (max-width: 767px) {
+  .order-confirmation-page {
+    padding: var(--spacing-lg) var(--spacing-md);
+    min-height: auto;
+  }
+  .order-card { 
+    padding: 32px 16px; 
+    border: none; 
+    box-shadow: none; 
+    background-color: transparent;
+  }
   .order-actions { flex-direction: column; }
-  .order-btn { justify-content: center; }
+  .order-btn { 
+    justify-content: center; 
+    min-height: 48px; 
+    width: 100%; 
+  }
 }
