@@ -4,8 +4,8 @@ A modern, full-featured eCommerce web application with product browsing, cart ma
 
 ## Live Demo
 
-- **Frontend**: _Deploy to Vercel (see Deployment section)_
-- **Backend API**: _Deploy to Render (see Deployment section)_
+- **Frontend**: [https://ecommerce-fullstack-design-zeta.vercel.app](https://ecommerce-fullstack-design-zeta.vercel.app)
+- **Backend API**: [https://ecommerce-fullstack-design-1c72.onrender.com](https://ecommerce-fullstack-design-1c72.onrender.com)
 
 ## Tech Stack
 
