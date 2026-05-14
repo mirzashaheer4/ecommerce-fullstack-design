@@ -5,6 +5,14 @@ import { useToast } from '../context/ToastContext';
 import './Footer.css';
 
 // Inline SVGs for brand icons not present in lucide-react
+const BrandBagIcon = ({ size = 24, color = "#FFFFFF" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <path d="M16 10a4 4 0 0 1-8 0"></path>
+  </svg>
+);
+
 const FacebookIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
@@ -54,7 +62,7 @@ const Footer = () => {
         <div className="footer-top">
           <div className="footer-brand">
             <Link to="/" className="footer-logo">
-              <div className="logo-icon"></div>
+              <div className="logo-icon"><BrandBagIcon size={20} color="#FFFFFF" /></div>
               <span className="logo-text">Brand</span>
             </Link>
             <p className="brand-desc">

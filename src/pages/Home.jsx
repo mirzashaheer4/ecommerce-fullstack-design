@@ -50,13 +50,13 @@ const Home = () => {
               <li><Link to="/products">More category</Link></li>
             </ul>
           </div>
-          <div className="hero-banner">
+          <div className="hero-banner" style={{ backgroundColor: '#A2D2C9', overflow: 'hidden' }}>
             <div className="banner-text">
               <h3>Latest trending</h3>
               <h2>Electronic items</h2>
               <Link to="/products" className="learn-more-btn">Learn more</Link>
             </div>
-            <img src="https://cdn.dummyjson.com/product-images/smartphones/samsung-galaxy-s10/1.webp" alt="Trending" className="banner-bg" />
+            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=600&q=80" alt="Trending" className="banner-bg" style={{ width: '55%', objectFit: 'cover' }} />
           </div>
           <div className="hero-right">
             <div className="user-card">
@@ -132,7 +132,11 @@ const Home = () => {
       {/* Home and Outdoor Section */}
       <section className="category-grid-section container">
         <div className="grid-container">
-          <div className="grid-banner" style={{ backgroundColor: '#F3EFE9' }}>
+          <div className="grid-banner" style={{ 
+            backgroundImage: "url('/images/home_outdoor_banner.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}>
             <div className="banner-content">
               <h3>Home and outdoor</h3>
               <Link to="/products?category=Home" className="source-now-btn">Source now</Link>
@@ -140,21 +144,58 @@ const Home = () => {
           </div>
           <div className="grid-items">
             {[
-              { name: 'Soft chairs', price: '19', img: 'https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/thumbnail.webp' },
-              { name: 'Sofa & chair', price: '19', img: 'https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/thumbnail.webp' },
-              { name: 'Kitchen dishes', price: '19', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/plate/thumbnail.webp' },
-              { name: 'Smart watches', price: '19', img: 'https://cdn.dummyjson.com/product-images/mobile-accessories/apple-watch-series-4-gold/thumbnail.webp' },
-              { name: 'Kitchen mixer', price: '39', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/hand-blender/thumbnail.webp' },
-              { name: 'Plant pots', price: '19', img: 'https://cdn.dummyjson.com/product-images/home-decoration/plant-pot/thumbnail.webp' },
-              { name: 'Coffee maker', price: '19', img: 'https://cdn.dummyjson.com/product-images/kitchen-accessories/boxed-blender/thumbnail.webp' },
-              { name: 'Table lamp', price: '19', img: 'https://cdn.dummyjson.com/product-images/home-decoration/table-lamp/thumbnail.webp' },
+              { name: 'Soft chairs', price: '19', img: 'https://cdn.dummyjson.com/products/images/furniture/Knoll%20Saarinen%20Executive%20Conference%20Chair/thumbnail.png' },
+              { name: 'Sofa & chair', price: '19', img: 'https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Sofa/thumbnail.png' },
+              { name: 'Kitchen dishes', price: '19', img: 'https://cdn.dummyjson.com/products/images/kitchen-accessories/Plate/thumbnail.png' },
+              { name: 'Smart watches', price: '19', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Watch%20Series%204%20Gold/thumbnail.png' },
+              { name: 'Kitchen mixer', price: '100', img: 'https://cdn.dummyjson.com/products/images/kitchen-accessories/Hand%20Blender/thumbnail.png' },
+              { name: 'Blenders', price: '39', img: 'https://cdn.dummyjson.com/products/images/kitchen-accessories/Boxed%20Blender/thumbnail.png' },
+              { name: 'Home appliance', price: '19', img: 'https://cdn.dummyjson.com/products/images/home-decoration/Plant%20Pot/thumbnail.png' },
+              { name: 'Coffee maker', price: '10', img: 'https://cdn.dummyjson.com/products/images/home-decoration/Table%20Lamp/thumbnail.png' },
             ].map((item, i) => (
               <Link to="/products" key={i} className="grid-item">
                 <div className="item-text">
                   <h4>{item.name}</h4>
-                  <p>From USD {item.price}</p>
+                  <p>From{'\n'}USD {item.price}</p>
                 </div>
-                <img src={item.img} alt={item.name} style={{ width: '80px', height: '80px', objectFit: 'contain' }} />
+                <img src={item.img} alt={item.name} style={{ width: '70px', height: '70px', objectFit: 'contain' }} />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Consumer Electronics Section */}
+      <section className="category-grid-section container">
+        <div className="grid-container">
+          <div className="grid-banner" style={{ 
+            backgroundImage: "url('/images/consumer_electronics_banner.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            color: '#1C1C1C'
+          }}>
+            <div className="banner-content">
+              <h3>Consumer electronics and gadgets</h3>
+              <Link to="/products?category=Electronics" className="source-now-btn">Source now</Link>
+            </div>
+          </div>
+          <div className="grid-items">
+            {[
+              { name: 'Smart watches', price: '19', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Watch%20Series%204%20Gold/thumbnail.png' },
+              { name: 'Cameras', price: '89', img: 'https://cdn.dummyjson.com/products/images/smartphones/iPhone%2013%20Pro/thumbnail.png' },
+              { name: 'Headphones', price: '10', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Beats%20Studio3%20Wireless/thumbnail.png' },
+              { name: 'Smart watches', price: '90', img: 'https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Airpods/thumbnail.png' },
+              { name: 'Gaming set', price: '35', img: 'https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen/thumbnail.png' },
+              { name: 'Laptops & PC', price: '340', img: 'https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014/thumbnail.png' },
+              { name: 'Smartphones', price: '19', img: 'https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S10/thumbnail.png' },
+              { name: 'Electric kattle', price: '240', img: 'https://cdn.dummyjson.com/products/images/smartphones/iPhone%20X/thumbnail.png' },
+            ].map((item, i) => (
+              <Link to="/products" key={i} className="grid-item">
+                <div className="item-text">
+                  <h4>{item.name}</h4>
+                  <p>From{'\n'}USD {item.price}</p>
+                </div>
+                <img src={item.img} alt={item.name} style={{ width: '70px', height: '70px', objectFit: 'contain' }} />
               </Link>
             ))}
           </div>

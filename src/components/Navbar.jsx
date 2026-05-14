@@ -1,11 +1,50 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, MessageSquare, Heart, ShoppingCart, Menu, ChevronDown, X, LogOut, Shield, Settings } from 'lucide-react';
+import { Search, Menu, ChevronDown, X, LogOut, Shield, Settings, User, MessageSquare, Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useToast } from '../context/ToastContext';
 import './Navbar.css';
+
+// Solid Icons
+const SolidProfileIcon = ({ size = 24, color = "#8B96A5" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+  </svg>
+);
+
+const SolidMessageIcon = ({ size = 24, color = "#8B96A5" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 10H7v-2h10v2zm0-3H7V7h10v2z" />
+  </svg>
+);
+
+const SolidHeartIcon = ({ size = 24, color = "#8B96A5" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+  </svg>
+);
+
+const SolidCartIcon = ({ size = 24, color = "#8B96A5" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4l-3.86 7H8.53L4.27 2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z" />
+  </svg>
+);
+
+const BrandBagIcon = ({ size = 24, color = "#FFFFFF" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <path d="M16 10a4 4 0 0 1-8 0"></path>
+  </svg>
+);
+
+const SolidOrdersIcon = ({ size = 24, color = "#8B96A5" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H6v-2h4v2zm0-4H6v-2h4v2zm0-4H6V7h4v2zm8 8h-6v-2h6v2zm0-4h-6v-2h6v2zm0-4h-6V7h6v2z" />
+  </svg>
+);
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -91,7 +130,7 @@ const Navbar = () => {
         <div className="drawer-header">
           <div className="logo" onClick={() => setIsMenuOpen(false)}>
             <Link to="/">
-              <div className="logo-icon"></div>
+              <div className="logo-icon"><BrandBagIcon size={20} color="#FFFFFF" /></div>
               <span className="logo-text">Brand</span>
             </Link>
           </div>
@@ -177,7 +216,7 @@ const Navbar = () => {
 
         <div className="logo">
           <Link to="/">
-            <div className="logo-icon"></div>
+            <div className="logo-icon"><BrandBagIcon size={20} color="#FFFFFF" /></div>
             <span className="logo-text">Brand</span>
           </Link>
         </div>
@@ -247,34 +286,34 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            /* Not authenticated: show login/register links (Desktop only) */
             <>
-              <Link to="/login" className="action-item desktop-only">
-                <User size={22} strokeWidth={1.5} color="#8B96A5" />
-                <span>Login</span>
-              </Link>
-              <Link to="/register" className="action-item desktop-only">
-                <User size={22} strokeWidth={1.5} color="#8B96A5" />
-                <span>Register</span>
+              <Link to="/profile" className="action-item desktop-only">
+                <SolidProfileIcon size={24} color="#8B96A5" />
+                <span>Profile</span>
               </Link>
             </>
           )}
 
           <Link to="/messages" className="action-item desktop-only">
-            <MessageSquare size={22} strokeWidth={1.5} color="#8B96A5" />
+            <SolidMessageIcon size={24} color="#8B96A5" />
             <span>Message</span>
+          </Link>
+
+          <Link to="/orders" className="action-item desktop-only">
+            <SolidOrdersIcon size={24} color="#8B96A5" />
+            <span>Orders</span>
           </Link>
           
           <Link to="/wishlist" className="action-item cart-action desktop-only">
-            <Heart size={22} strokeWidth={1.5} color="#8B96A5" />
+            <SolidHeartIcon size={24} color="#8B96A5" />
             {wishlistCount > 0 && <span className="cart-badge wishlist-badge">{wishlistCount}</span>}
-            <span>Wishlist</span>
+            <span>Saved</span>
           </Link>
 
           {/* User Icon visible on Mobile next to Cart */}
           {!isAuthenticated ? (
-            <Link to="/login" className="action-item mobile-only user-mobile-icon">
-              <User size={24} strokeWidth={1.5} color="#8B96A5" />
+            <Link to="/profile" className="action-item mobile-only user-mobile-icon">
+              <SolidProfileIcon size={26} color="#8B96A5" />
             </Link>
           ) : (
             <Link to="/profile" className="action-item mobile-only user-mobile-icon">
@@ -285,7 +324,7 @@ const Navbar = () => {
           )}
 
           <Link to="/cart" className="action-item cart-action">
-            <ShoppingCart size={24} strokeWidth={1.5} color="#8B96A5" />
+            <SolidCartIcon size={26} color="#8B96A5" />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             <span className="desktop-only">My cart</span>
           </Link>

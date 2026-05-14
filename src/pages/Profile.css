@@ -7,6 +7,7 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: 24px;
+  text-align: center;
 }
 .profile-card {
   background: var(--color-surface);
@@ -14,6 +15,7 @@
   border-radius: var(--border-radius-lg);
   padding: 40px;
   max-width: 600px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;

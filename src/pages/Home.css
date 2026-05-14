@@ -35,10 +35,9 @@
   margin-bottom: 8px;
 }
 
-/* Hero Section */
 .hero-section {
   padding-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px !important;
 }
 
 .hero-content {
@@ -169,7 +168,7 @@
 
 /* Deals and Offers */
 .deals-section {
-  margin-bottom: 20px;
+  margin-bottom: 30px !important;
 }
 
 .deals-container {
@@ -267,7 +266,7 @@
 
 /* Category Grid Section */
 .category-grid-section {
-  margin-bottom: 20px;
+  margin-bottom: 30px !important;
 }
 
 .grid-container {
@@ -281,19 +280,27 @@
 .grid-banner {
   width: 280px;
   padding: 20px;
+  position: relative;
 }
 
 .grid-banner h3 {
   font-size: 20px;
   margin-bottom: 16px;
+  font-weight: 700;
+  color: #1C1C1C;
+  max-width: 150px;
 }
 
 .source-now-btn {
   background-color: var(--color-surface);
-  padding: 10px 16px;
-  border-radius: var(--border-radius-sm);
-  font-weight: var(--font-weight-medium);
-  box-shadow: var(--shadow-card);
+  color: #1C1C1C;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  display: inline-block;
+  border: 1px solid var(--color-border);
 }
 
 .grid-items {
@@ -320,19 +327,26 @@
 }
 
 .item-text h4 {
-  font-weight: var(--font-weight-regular);
-  font-size: var(--font-size-base);
-  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #1C1C1C;
 }
 
 .item-text p {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  color: #8B96A5;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+.grid-item img {
+  align-self: flex-end;
 }
 
 /* Recommended Items */
 .recommended-section {
-  margin-bottom: 40px;
+  margin-bottom: 40px !important;
 }
 
 .recommended-section h3 {
@@ -348,11 +362,13 @@
 
 /* Quotes Banner */
 .quotes-banner {
-  margin-bottom: 40px;
+  margin-bottom: 40px !important;
 }
 
 .quotes-content {
-  background: linear-gradient(135deg, #2A7AF9, #054CC7);
+  background: linear-gradient(to right, rgba(42, 122, 249, 0.9), rgba(5, 76, 199, 0.7)), url('https://images.unsplash.com/photo-1586528116311-ad8ed7c5084f?auto=format&fit=crop&w=1200&q=80');
+  background-size: cover;
+  background-position: center;
   border-radius: var(--border-radius-md);
   padding: 40px;
   display: flex;
@@ -371,10 +387,11 @@
 
 .quotes-form {
   background-color: var(--color-surface);
-  padding: 24px;
+  padding: 32px;
   border-radius: var(--border-radius-md);
   width: 450px;
   color: var(--color-text-primary);
+  box-shadow: var(--shadow-card);
 }
 
 .quotes-form h3 {

@@ -285,7 +285,7 @@ const ProductDetails = () => {
           <h2>Super discount on more than 100 USD</h2>
           <p>Have you ever finally just write dummy info</p>
         </div>
-        <button className="btn-secondary">Shop now</button>
+        <Link to="/products" className="btn-secondary">Shop now</Link>
       </div>
     </div>
   );

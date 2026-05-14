@@ -29,19 +29,21 @@
 }
 
 .logo-icon {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   background-color: var(--color-primary);
-  border-radius: var(--border-radius-sm);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 3px 3px 0px rgba(13, 110, 253, 0.2);
 }
 
 .logo-text {
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-weight: 700;
+  color: #8AB4F8;
+  margin-left: 4px;
 }
 
 .search-bar {

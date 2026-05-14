@@ -46,12 +46,7 @@ export const CartProvider = ({ children }) => {
     }
   }, [isAuthenticated, token]);
 
-  // Persist guest cart to localStorage
-  useEffect(() => {
-    if (!isAuthenticated) {
-      saveCartToStorage(cartItems);
-    }
-  }, [cartItems, isAuthenticated]);
+  // (Removed problematic useEffect that saved cart on auth change)
 
   // Merge localStorage cart into backend, then fetch fresh
   const mergeAndFetch = async () => {
@@ -116,26 +111,30 @@ export const CartProvider = ({ children }) => {
       // Guest: localStorage
       setCartItems((prev) => {
         const existingIndex = prev.findIndex((item) => item._id === product._id);
+        let newItems;
         if (existingIndex >= 0) {
           const updated = [...prev];
           updated[existingIndex] = {
             ...updated[existingIndex],
             qty: updated[existingIndex].qty + qty,
           };
-          return updated;
+          newItems = updated;
+        } else {
+          newItems = [
+            ...prev,
+            {
+              _id: product._id,
+              name: product.name,
+              price: product.price,
+              image: product.images?.[0] || product.image,
+              category: product.category,
+              qty,
+              seller: 'Marketplace Seller',
+            },
+          ];
         }
-        return [
-          ...prev,
-          {
-            _id: product._id,
-            name: product.name,
-            price: product.price,
-            image: product.images?.[0] || product.image,
-            category: product.category,
-            qty,
-            seller: 'Marketplace Seller',
-          },
-        ];
+        saveCartToStorage(newItems);
+        return newItems;
       });
     }
   }, [isAuthenticated, token]);
@@ -159,7 +158,11 @@ export const CartProvider = ({ children }) => {
         console.error('Remove from cart error:', error);
       }
     } else {
-      setCartItems((prev) => prev.filter((item) => item._id !== productId));
+      setCartItems((prev) => {
+        const newItems = prev.filter((item) => item._id !== productId);
+        saveCartToStorage(newItems);
+        return newItems;
+      });
     }
   }, [isAuthenticated, token]);
 
@@ -184,11 +187,13 @@ export const CartProvider = ({ children }) => {
         console.error('Update quantity error:', error);
       }
     } else {
-      setCartItems((prev) =>
-        prev.map((item) =>
+      setCartItems((prev) => {
+        const newItems = prev.map((item) =>
           item._id === productId ? { ...item, qty } : item
-        )
-      );
+        );
+        saveCartToStorage(newItems);
+        return newItems;
+      });
     }
   }, [isAuthenticated, token, removeFromCart]);
 
@@ -202,6 +207,7 @@ export const CartProvider = ({ children }) => {
       }
     } else {
       setCartItems([]);
+      saveCartToStorage([]);
     }
   }, [isAuthenticated, token]);
 
