@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Star } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -13,6 +13,7 @@ const ProductCard = ({ product, variant = 'grid' }) => {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { showToast } = useToast();
   const { formatPrice } = useSettings();
+  const navigate = useNavigate();
   const productId = _id || id;
   const productImage = images?.[0] || image;
   const wishlisted = isInWishlist(productId);
@@ -43,7 +44,7 @@ const ProductCard = ({ product, variant = 'grid' }) => {
 
   if (variant === 'list') {
     return (
-      <div className="product-card list-variant">
+      <div className="product-card list-variant" onClick={() => navigate(`/products/${productId}`)} style={{ cursor: 'pointer' }}>
         <div className="product-image-container">
           <img src={productImage} alt={name} className="product-image" />
         </div>
@@ -70,7 +71,7 @@ const ProductCard = ({ product, variant = 'grid' }) => {
             )}
           </div>
           <p className="product-desc">{description}</p>
-          <Link to={`/products/${productId}`} className="view-details">View details</Link>
+          <Link to={`/products/${productId}`} className="view-details" onClick={(e) => e.stopPropagation()}>View details</Link>
         </div>
       </div>
     );

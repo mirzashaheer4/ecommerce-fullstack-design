@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Users, AlertTriangle, Star, BarChart3 } from 'lucide-react';
+import { Package, Users, AlertTriangle, Star, BarChart3, ShoppingBag, DollarSign } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
@@ -49,10 +49,12 @@ const AdminDashboard = () => {
   }
 
   const statCards = [
-    { label: 'Total Products', value: stats?.totalProducts || 0, icon: Package, color: '#0D6EFD' },
-    { label: 'Total Users', value: stats?.totalUsers || 0, icon: Users, color: '#00B517' },
-    { label: 'Low Stock', value: stats?.lowStockProducts || 0, icon: AlertTriangle, color: '#FF9017' },
-    { label: 'Featured', value: stats?.featuredProductCount || 0, icon: Star, color: '#FA3434' },
+    { label: 'Total Revenue', value: `$${(stats?.totalRevenue || 0).toFixed(2)}`, icon: DollarSign, color: '#0D6EFD' },
+    { label: 'Total Orders', value: stats?.totalOrders || 0, icon: ShoppingBag, color: '#00B517' },
+    { label: 'Total Products', value: stats?.totalProducts || 0, icon: Package, color: '#FF9017' },
+    { label: 'Total Users', value: stats?.totalUsers || 0, icon: Users, color: '#8A2BE2' },
+    { label: 'Low Stock', value: stats?.lowStockProducts || 0, icon: AlertTriangle, color: '#FA3434' },
+    { label: 'Featured', value: stats?.featuredProductCount || 0, icon: Star, color: '#F6B100' },
   ];
 
   return (
@@ -105,6 +107,46 @@ const AdminDashboard = () => {
                     </tr>
                   );
                 })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Recent Orders */}
+      {stats?.recentOrders && stats.recentOrders.length > 0 && (
+        <div className="dashboard-section" style={{ marginTop: '30px' }}>
+          <h3 className="section-title">
+            <ShoppingBag size={18} />
+            Recent Orders
+          </h3>
+          <div className="category-table-card">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Order #</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats.recentOrders.map(order => (
+                  <tr key={order._id}>
+                    <td>{order.orderNumber}</td>
+                    <td>{order.user ? order.user.name : order.deliveryInfo?.fullName}</td>
+                    <td>{order.items.reduce((acc, item) => acc + item.quantity, 0)}</td>
+                    <td>${order.total.toFixed(2)}</td>
+                    <td>
+                      <span className={`status-badge status-${order.status}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

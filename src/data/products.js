@@ -14,7 +14,7 @@ export const products = [
     category: 'Electronics',
     rating: 4.5,
     reviewCount: 154,
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    description: 'Capture stunning photos and videos with this high-resolution camera. Features advanced autofocus and impressive low-light performance for professional-grade results.',
     stock: true,
     freeShipping: true,
     features: ['Plastic cover', '8GB Ram', 'Super power']
@@ -32,7 +32,7 @@ export const products = [
     category: 'Electronics',
     rating: 4.8,
     reviewCount: 154,
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit',
+    description: 'Capture your adventures in stunning 4K resolution. Waterproof, durable, and equipped with advanced stabilization for smooth, professional-quality footage anywhere.',
     stock: true,
     freeShipping: true,
     features: ['Metallic', 'Super power']
@@ -47,7 +47,7 @@ export const products = [
     category: 'Smartphones',
     rating: 4.2,
     reviewCount: 89,
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    description: 'A reliable and affordable smartphone featuring a vibrant display, long-lasting battery life, and a versatile camera setup for your everyday needs.',
     stock: true,
     freeShipping: false,
     features: ['Large Memory']

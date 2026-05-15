@@ -156,8 +156,8 @@ const seedProducts = [
     price: 99.5,
     originalPrice: null,
     images: [
-      `${D}/mens-shirts/men-check-shirt/1.webp`,
-      `${D}/mens-shirts/men-check-shirt/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Men+Blazer+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Men+Blazer+2`,
     ],
     description: 'Elegant formal blazer set for men, perfect for business meetings and special occasions.',
     category: 'Clothing',
@@ -195,8 +195,8 @@ const seedProducts = [
     price: 10.3,
     originalPrice: null,
     images: [
-      `${D}/mens-shirts/man-short-sleeve-shirt/1.webp`,
-      `${D}/mens-shirts/man-short-sleeve-shirt/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Jeans+Shorts+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Jeans+Shorts+2`,
     ],
     description: 'Classic blue jeans shorts, lightweight and comfortable for everyday wear.',
     category: 'Clothing',
@@ -214,8 +214,8 @@ const seedProducts = [
     price: 12.5,
     originalPrice: null,
     images: [
-      `${D}/mens-shirts/man-plaid-shirt/1.webp`,
-      `${D}/mens-shirts/man-plaid-shirt/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Winter+Coat+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Winter+Coat+2`,
     ],
     description: 'Warm brown winter coat with soft inner lining. Medium size fits most body types.',
     category: 'Clothing',
@@ -233,8 +233,8 @@ const seedProducts = [
     price: 35.0,
     originalPrice: 50.0,
     images: [
-      `${D}/mens-shirts/blue-&-black-check-shirt/1.webp`,
-      `${D}/mens-shirts/blue-&-black-check-shirt/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Summer+Dress+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Summer+Dress+2`,
     ],
     description: 'Beautiful floral print summer dress, lightweight and breathable fabric perfect for warm weather.',
     category: 'Clothing',
@@ -274,7 +274,7 @@ const seedProducts = [
     price: 34.0,
     originalPrice: null,
     images: [
-      `${D}/kitchen-accessories/lunch-box/1.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Travel+Bag`,
     ],
     description: 'Durable jeans travel bag with multiple compartments and reinforced stitching.',
     category: 'Accessories',
@@ -292,8 +292,8 @@ const seedProducts = [
     price: 99.0,
     originalPrice: null,
     images: [
-      `${D}/mens-watches/brown-leather-belt-watch/1.webp`,
-      `${D}/mens-watches/brown-leather-belt-watch/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Leather+Wallet+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Leather+Wallet+2`,
     ],
     description: 'Premium genuine leather wallet with RFID protection and multiple card slots.',
     category: 'Accessories',
@@ -311,8 +311,8 @@ const seedProducts = [
     price: 10.3,
     originalPrice: null,
     images: [
-      `${D}/mens-watches/rolex-datejust/1.webp`,
-      `${D}/mens-watches/rolex-datejust/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Pocco+Smartwatch+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Pocco+Smartwatch+2`,
     ],
     description: 'Modern silver smartwatch with health tracking, notifications, and long battery life.',
     category: 'Accessories',
@@ -330,8 +330,8 @@ const seedProducts = [
     price: 29.0,
     originalPrice: 39.0,
     images: [
-      `${D}/mens-watches/longines-master-collection/1.webp`,
-      `${D}/mens-watches/longines-master-collection/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Fitness+Tracker+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Fitness+Tracker+2`,
     ],
     description: 'Lightweight fitness tracker with heart rate monitor, sleep tracking, and 14-day battery life.',
     category: 'Accessories',
@@ -408,7 +408,7 @@ const seedProducts = [
     price: 35.0,
     originalPrice: 45.0,
     images: [
-      `${D}/home-decoration/decoration-swing/1.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Memory+Foam+Pillow`,
     ],
     description: 'Ergonomic memory foam pillow for neck support. Breathable and hypoallergenic cover included.',
     category: 'Home & Garden',
@@ -484,8 +484,8 @@ const seedProducts = [
     price: 42.0,
     originalPrice: null,
     images: [
-      `${D}/sports-accessories/cricket-helmet/1.webp`,
-      `${D}/sports-accessories/cricket-helmet/2.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Mountain+Bike+Helmet+1`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Mountain+Bike+Helmet+2`,
     ],
     description: 'Lightweight mountain bike helmet with adjustable fit system and ventilation channels.',
     category: 'Sports & Outdoor',
@@ -543,7 +543,7 @@ const seedProducts = [
     price: 55.0,
     originalPrice: 75.0,
     images: [
-      `${D}/skin-care/olay-ultra-moisture-shea-butter-body-wash/1.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Electric+Toothbrush`,
     ],
     description: 'Sonic electric toothbrush with 5 cleaning modes, smart timer, and 30-day battery life.',
     category: 'Beauty & Health',
@@ -561,7 +561,7 @@ const seedProducts = [
     price: 65.0,
     originalPrice: 85.0,
     images: [
-      `${D}/beauty/powder-canister/1.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Hair+Dryer`,
     ],
     description: 'Professional ionic hair dryer with 2000W power, 3 heat settings, and concentrator nozzle.',
     category: 'Beauty & Health',
@@ -579,7 +579,7 @@ const seedProducts = [
     price: 129.0,
     originalPrice: 179.0,
     images: [
-      `${D}/beauty/red-lipstick/1.webp`,
+      `https://placehold.co/400x400/e2e8f0/64748b?text=Massage+Gun`,
     ],
     description: 'Professional deep tissue massage gun with 6 speed levels, 4 head attachments, and quiet motor.',
     category: 'Beauty & Health',

@@ -226,7 +226,7 @@ const ProductDetails = () => {
                   <p className="description-text">
                     {product.description}
                     <br/><br/>
-                    Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    This product is built with premium materials to ensure long-lasting durability and top-tier performance. It seamlessly integrates into your daily life, offering both convenience and style. With rigorous quality checks, you can trust that it meets the highest standards for reliability.
                   </p>
                   <table className="specs-table">
                     <tbody>
@@ -238,10 +238,10 @@ const ProductDetails = () => {
                     </tbody>
                   </table>
                   <ul className="features-list">
-                    <li><Check size={16} color="#8B96A5"/> Some great feature name here</li>
-                    <li><Check size={16} color="#8B96A5"/> Lorem ipsum dolor sit amet, consectetur</li>
-                    <li><Check size={16} color="#8B96A5"/> Duis aute irure dolor in reprehenderit</li>
-                    <li><Check size={16} color="#8B96A5"/> Some great feature name here</li>
+                    <li><Check size={16} color="#8B96A5"/> Fast and reliable performance</li>
+                    <li><Check size={16} color="#8B96A5"/> Premium build quality for durability</li>
+                    <li><Check size={16} color="#8B96A5"/> Designed for maximum comfort and usability</li>
+                    <li><Check size={16} color="#8B96A5"/> Eco-friendly and sustainable materials</li>
                   </ul>
                 </>
               )}
@@ -285,7 +285,7 @@ const ProductDetails = () => {
       <div className="discount-banner">
         <div className="banner-text-content">
           <h2>Super discount on more than 100 USD</h2>
-          <p>Have you ever finally just write dummy info</p>
+          <p>Get exclusive deals on premium products today</p>
         </div>
         <Link to="/products" className="btn-secondary">Shop now</Link>
       </div>

@@ -57,7 +57,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    navigate('/order-confirmation', { state: { orderTotal: total, subtotal, tax, shipping, couponDiscount, currency } });
+    navigate('/checkout', { state: { couponDiscount } });
   };
 
   return (
@@ -190,7 +190,12 @@ const Cart = () => {
               <span>Total:</span>
               <span>{formatPrice(total)}</span>
             </div>
-            <button className="btn-success full-width" style={{ marginTop: '20px', padding: '12px', fontSize: '18px' }} onClick={handleCheckout}>
+            <button 
+              className="btn-success full-width" 
+              style={{ marginTop: '20px', padding: '12px', fontSize: '18px' }} 
+              onClick={handleCheckout}
+              disabled={cartItems.length === 0}
+            >
               Checkout
             </button>
             <div className="payment-methods">

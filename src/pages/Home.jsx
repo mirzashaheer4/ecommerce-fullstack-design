@@ -7,6 +7,7 @@ import { useToast } from '../context/ToastContext';
 import { useAuth } from '../context/AuthContext';
 import './Home.css';
 import { Mail, ArrowRight, User } from 'lucide-react';
+import coverImage from '../assets/cover_image.png';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -14,6 +15,49 @@ const Home = () => {
   const [error, setError] = useState(null);
   const { showToast } = useToast();
   const { isAuthenticated, user, logoutUser } = useAuth();
+  const [timeLeft, setTimeLeft] = useState({
+    days: 4,
+    hours: 13,
+    minutes: 34,
+    seconds: 56
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        let { days, hours, minutes, seconds } = prev;
+        
+        if (seconds > 0) {
+          seconds--;
+        } else {
+          if (minutes > 0) {
+            minutes--;
+            seconds = 59;
+          } else {
+            if (hours > 0) {
+              hours--;
+              minutes = 59;
+              seconds = 59;
+            } else {
+              if (days > 0) {
+                days--;
+                hours = 23;
+                minutes = 59;
+                seconds = 59;
+              } else {
+                clearInterval(timer);
+                return prev;
+              }
+            }
+          }
+        }
+        
+        return { days, hours, minutes, seconds };
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     document.title = "E-commerce | Home";
@@ -51,12 +95,10 @@ const Home = () => {
             </ul>
           </div>
           <div className="hero-banner" style={{ backgroundColor: '#A2D2C9', overflow: 'hidden' }}>
-            <div className="banner-text">
-              <h3>Latest trending</h3>
-              <h2>Electronic items</h2>
+            <div className="banner-text" style={{ position: 'absolute', top: '160px', left: '40px' }}>
               <Link to="/products" className="learn-more-btn">Learn more</Link>
             </div>
-            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=600&q=80" alt="Trending" className="banner-bg" style={{ width: '55%', objectFit: 'cover' }} />
+            <img src={coverImage} alt="Trending" className="banner-bg" style={{ width: '100%', height: '100%', left: 0, top: 0, objectFit: 'cover', objectPosition: 'left center' }} />
           </div>
           <div className="hero-right">
             <div className="user-card">
@@ -101,10 +143,10 @@ const Home = () => {
             <h3>Deals and offers</h3>
             <p>Hygiene equipments</p>
             <div className="countdown">
-              <div className="time-box"><strong>04</strong><span>Days</span></div>
-              <div className="time-box"><strong>13</strong><span>Hour</span></div>
-              <div className="time-box"><strong>34</strong><span>Min</span></div>
-              <div className="time-box"><strong>56</strong><span>Sec</span></div>
+              <div className="time-box"><strong>{String(timeLeft.days).padStart(2, '0')}</strong><span>Days</span></div>
+              <div className="time-box"><strong>{String(timeLeft.hours).padStart(2, '0')}</strong><span>Hour</span></div>
+              <div className="time-box"><strong>{String(timeLeft.minutes).padStart(2, '0')}</strong><span>Min</span></div>
+              <div className="time-box"><strong>{String(timeLeft.seconds).padStart(2, '0')}</strong><span>Sec</span></div>
             </div>
           </div>
           <div className="deals-items">

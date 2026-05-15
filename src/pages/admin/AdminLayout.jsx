@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Menu, X, LogOut, ChevronLeft } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Menu, X, LogOut, ChevronLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './AdminLayout.css';
 
@@ -41,6 +41,14 @@ const AdminLayout = () => {
           >
             <Package size={18} />
             <span>Products</span>
+          </NavLink>
+          <NavLink
+            to="/admin/orders"
+            className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            <ShoppingBag size={18} />
+            <span>Orders</span>
           </NavLink>
         </nav>
 

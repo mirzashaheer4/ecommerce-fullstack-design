@@ -27,6 +27,8 @@ import AdminLayout from './pages/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminProductForm from './pages/admin/AdminProductForm';
+import AdminOrders from './pages/admin/AdminOrders';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -52,6 +54,7 @@ function App() {
                   <Route path="products" element={<AdminProducts />} />
                   <Route path="products/new" element={<AdminProductForm />} />
                   <Route path="products/:id/edit" element={<AdminProductForm />} />
+                  <Route path="orders" element={<AdminOrders />} />
                 </Route>
 
                 {/* ===== Public / Customer Routes (with Navbar/Footer) ===== */}
@@ -71,6 +74,7 @@ function App() {
                           <Route path="/about" element={<About />} />
                           <Route path="/contact" element={<Contact />} />
                           <Route path="/wishlist" element={<Wishlist />} />
+                          <Route path="/checkout" element={<Checkout />} />
                           <Route path="/order-confirmation" element={<OrderConfirmation />} />
                           <Route
                             path="/profile"

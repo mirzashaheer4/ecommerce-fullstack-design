@@ -1,7 +1,7 @@
 import express from 'express';
 import protect from '../middleware/authMiddleware.js';
 import adminMiddleware from '../middleware/adminMiddleware.js';
-import { getDashboardStats, getAllUsers } from '../controllers/adminController.js';
+import { getDashboardStats, getAllUsers, getAllOrders, updateOrderStatus } from '../controllers/adminController.js';
 import {
   getAllProducts,
   createProduct,
@@ -21,5 +21,7 @@ router.post('/products', createProduct);
 router.put('/products/:id', updateProduct);
 router.delete('/products/:id', deleteProduct);
 router.get('/users', getAllUsers);
+router.get('/orders', getAllOrders);
+router.put('/orders/:id', updateOrderStatus);
 
 export default router;
