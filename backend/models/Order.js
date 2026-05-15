@@ -48,7 +48,7 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-orderSchema.pre('save', function (next) {
+orderSchema.pre('save', function () {
   if (!this.orderNumber) {
     this.orderNumber =
       'ORD-' +
@@ -56,7 +56,6 @@ orderSchema.pre('save', function (next) {
       '-' +
       Math.random().toString(36).slice(-3).toUpperCase();
   }
-  next();
 });
 
 const Order = mongoose.model('Order', orderSchema);

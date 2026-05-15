@@ -1,164 +1,163 @@
-# eCommerce Full-Stack App
+# E-Commerce Web App
 
-A modern, full-featured eCommerce web application with product browsing, cart management, user authentication, and an admin panel.
+A full-stack e-commerce storefront with a polished customer experience, authenticated cart flow, wishlist and order pages, Stripe-ready checkout, and a separate admin workspace for product and order management.
+
+## Overview
+
+This project pairs a React + Vite frontend with an Express + MongoDB backend. The customer app covers product discovery, product detail pages, cart, checkout, profile, orders, wishlist, and support pages. The admin area is isolated from the public layout and includes dashboard, product CRUD, and order management.
 
 ## Live Demo
 
-- **Frontend**: [https://ecommerce-fullstack-design-zeta.vercel.app](https://ecommerce-fullstack-design-zeta.vercel.app)
-- **Backend API**: [https://ecommerce-fullstack-design-1c72.onrender.com](https://ecommerce-fullstack-design-1c72.onrender.com)
+- Frontend: [https://ecommerce-fullstack-design-zeta.vercel.app](https://ecommerce-fullstack-design-zeta.vercel.app)
+- Backend API: [https://ecommerce-fullstack-design-1c72.onrender.com](https://ecommerce-fullstack-design-1c72.onrender.com)
 
 ## Tech Stack
 
-| Layer      | Technology                           |
-| ---------- | ------------------------------------ |
-| Frontend   | React 19, React Router 7, Vanilla CSS |
-| Backend    | Node.js, Express 5                   |
-| Database   | MongoDB Atlas, Mongoose 9            |
-| Auth       | JWT (jsonwebtoken), bcryptjs         |
-| Deployment | Vercel (frontend), Render (backend)  |
+| Layer | Stack |
+| --- | --- |
+| Frontend | React 19, React Router 7, Vite, Vanilla CSS |
+| Backend | Node.js, Express 5 |
+| Database | MongoDB, Mongoose 9 |
+| Auth | JWT, bcryptjs |
+| Payments | Stripe |
+| Tooling | ESLint, concurrently |
 
-## Features
+## Highlights
 
-- **Product Browsing** — Home page with featured products, category grid, deals section
-- **Product Listing** — Filter by category, brand, features, condition, price range. Sort by price, rating, newest
-- **Product Details** — Image gallery, related products, add to cart
-- **Search** — Full-text search across product name, description, category, and tags
-- **Cart** — Guest cart (localStorage) + authenticated cart (MongoDB). Automatic merge on login
-- **Authentication** — Register, login, logout with JWT tokens
-- **Admin Panel** — Dashboard stats, product CRUD (create, read, update, delete), user listing
-- **Responsive** — Fully responsive across mobile, tablet, and desktop
+- Fast product discovery with featured items, category browsing, filters, sorting, and search.
+- Product detail pages with image galleries, related products, and add-to-cart actions.
+- Cart flow that supports authenticated users and guest sessions.
+- Protected customer pages for profile, orders, and checkout.
+- Admin workspace with dashboard metrics, product management, and order updates.
+- Responsive layout designed to work cleanly across mobile, tablet, and desktop.
 
-## Getting Started (Local Development)
+## Frontend Routes
 
-### Prerequisites
+- Public: `/`, `/products`, `/products/:id`, `/about`, `/contact`, `/wishlist`, `/messages`
+- Customer: `/cart`, `/checkout`, `/order-confirmation`, `/profile`, `/orders`
+- Auth: `/login`, `/register`
+- Admin: `/admin/dashboard`, `/admin/products`, `/admin/products/new`, `/admin/products/:id/edit`, `/admin/orders`
 
-- Node.js v18+
-- MongoDB running locally or a MongoDB Atlas account
+## Backend API
 
-### Backend Setup
+- Auth: `/api/auth/register`, `/api/auth/login`, `/api/auth/profile`
+- Products: `/api/products`, `/api/products/featured`, `/api/products/:id`, `/api/products/:id/related`
+- Search: `/api/search?q=term`
+- Cart: `/api/cart`
+- Admin: `/api/admin/stats`, `/api/admin/products`, `/api/admin/users`, `/api/admin/orders`
+- Payments: `/api/payment/create-intent`, `/api/payment/confirm`, `/api/payment/my-orders`, `/api/payment/orders/:id`
+- Health check: `/api/health`
+
+## Getting Started
+
+### Requirements
+
+- Node.js 18 or newer
+- MongoDB Atlas or a local MongoDB instance
+
+### 1. Install Dependencies
+
+```bash
+npm install
+cd backend
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Copy the example files and fill in your values:
+
+- Root: [.env.example](.env.example) -> `.env`
+- Backend: [backend/.env.example](backend/.env.example) -> `backend/.env`
+
+### 3. Seed the Database
 
 ```bash
 cd backend
-npm install
-cp .env.example .env    # Then fill in your values
-npm run seed            # Seed 30 products
-npm run seed:admin      # Create admin user
-npm run dev             # Starts on http://localhost:5000
+npm run seed
+npm run seed:admin
 ```
 
-### Frontend Setup
+The admin seed creates:
+
+- Email: `admin@ecommerce.com`
+- Password: `admin123`
+
+### 4. Run the App
+
+From the project root:
 
 ```bash
-# From project root
-npm install
-cp .env.example .env    # Set VITE_API_URL=http://localhost:5000/api
-npm run dev             # Starts on http://localhost:5173
+npm run dev
 ```
+
+This starts both the Vite frontend and the backend server.
 
 ## Environment Variables
 
-### Backend (`backend/.env`)
+### Root `.env`
 
-| Variable       | Description                    | Example                      |
-| -------------- | ------------------------------ | ---------------------------- |
-| `PORT`         | Server port                    | `5000`                       |
-| `MONGO_URI`    | MongoDB connection string      | `mongodb+srv://...`          |
-| `CLIENT_URL`   | Frontend URL (for CORS)        | `http://localhost:5173`      |
-| `NODE_ENV`     | Environment                    | `development` or `production`|
-| `JWT_SECRET`   | Secret key for JWT signing     | `your_secret_key`            |
-| `JWT_EXPIRES_IN` | JWT expiration              | `7d`                         |
+| Variable | Description |
+| --- | --- |
+| `VITE_API_URL` | Backend API base URL |
+| `VITE_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key used by the frontend |
 
-### Frontend (`.env`)
+### `backend/.env`
 
-| Variable       | Description         | Example                              |
-| -------------- | ------------------- | ------------------------------------ |
-| `VITE_API_URL` | Backend API base URL | `http://localhost:5000/api`          |
+| Variable | Description |
+| --- | --- |
+| `PORT` | Server port |
+| `MONGO_URI` | MongoDB connection string |
+| `CLIENT_URL` | Frontend origin allowed by CORS |
+| `NODE_ENV` | Environment mode |
+| `JWT_SECRET` | JWT signing secret |
+| `JWT_EXPIRES_IN` | JWT token lifetime |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
 
-## Test Credentials
+## Available Scripts
 
-| Role  | Email                  | Password   |
-| ----- | ---------------------- | ---------- |
-| Admin | admin@ecommerce.com    | admin123   |
-| User  | _Register a new account_ | _Your choice_ |
+### Root
 
-## API Endpoints
+- `npm run dev` - Start frontend and backend together.
+- `npm run dev:frontend` - Start the Vite app only.
+- `npm run dev:backend` - Start the backend only.
+- `npm run build` - Build the frontend for production.
+- `npm run lint` - Run ESLint.
+- `npm run preview` - Preview the production build.
 
-### Auth
-- `POST /api/auth/register` — Register new user
-- `POST /api/auth/login` — Login
-- `GET /api/auth/profile` — Get profile (protected)
-- `PUT /api/auth/profile` — Update profile (protected)
+### Backend
 
-### Products
-- `GET /api/products` — List products (with filters/pagination)
-- `GET /api/products/featured` — Featured products
-- `GET /api/products/:id` — Single product
-- `GET /api/products/:id/related` — Related products
-
-### Cart (protected)
-- `GET /api/cart` — Get cart
-- `POST /api/cart` — Add to cart
-- `PUT /api/cart/:productId` — Update quantity
-- `DELETE /api/cart/:productId` — Remove item
-- `DELETE /api/cart` — Clear cart
-
-### Admin (protected + admin)
-- `GET /api/admin/stats` — Dashboard stats
-- `GET /api/admin/products` — All products
-- `POST /api/admin/products` — Create product
-- `PUT /api/admin/products/:id` — Update product
-- `DELETE /api/admin/products/:id` — Delete product
-- `GET /api/admin/users` — All users
-
-### Search
-- `GET /api/search?q=term` — Search products
-
-## Deployment
-
-### Backend → Render
-
-1. Go to [render.com](https://render.com) → **New Web Service**
-2. Connect your GitHub repo
-3. Settings:
-   - **Root directory**: `backend`
-   - **Build command**: `npm install`
-   - **Start command**: `npm start`
-4. Add environment variables (see table above)
-5. Set `CLIENT_URL` to your Vercel frontend URL
-6. Deploy
-
-### Frontend → Vercel
-
-1. Go to [vercel.com](https://vercel.com) → **New Project**
-2. Import your GitHub repo
-3. Settings:
-   - **Framework**: Vite
-   - **Root directory**: `.` (project root)
-   - **Build command**: `npm run build`
-   - **Output directory**: `dist`
-4. Add environment variable: `VITE_API_URL=https://your-backend.onrender.com/api`
-5. Deploy
-6. Go back to Render → update `CLIENT_URL` to the Vercel URL → redeploy
+- `npm run dev` - Start the backend with nodemon.
+- `npm start` - Start the backend in production mode.
+- `npm run seed` - Seed products.
+- `npm run seed:admin` - Create the admin user.
 
 ## Project Structure
 
 ```
 ├── backend/
-│   ├── config/           # Database connection
-│   ├── controllers/      # Route handlers (auth, cart, admin, product)
-│   ├── middleware/        # Auth, admin, error handler
-│   ├── models/           # Mongoose schemas (User, Product, Cart)
-│   ├── routes/           # Express routes
-│   ├── seed/             # Database seeders
-│   └── server.js         # Entry point
+│   ├── config/        # Database connection
+│   ├── controllers/   # API logic for auth, cart, products, payments, admin
+│   ├── middleware/    # Auth, admin, and error handling
+│   ├── models/        # Mongoose schemas
+│   ├── routes/        # Express route definitions
+│   ├── seed/          # Seed scripts for products and admin user
+│   └── server.js      # Backend entry point
 ├── src/
-│   ├── api/              # Frontend API layer
-│   ├── components/       # Shared components (Navbar, Footer, etc.)
-│   ├── context/          # React contexts (Auth, Cart)
-│   ├── pages/            # Page components + admin panel
-│   └── styles/           # Design tokens
-└── Figma_Designs/        # Reference designs
+│   ├── api/           # Frontend API wrappers
+│   ├── components/    # Shared UI components
+│   ├── context/       # App state providers
+│   ├── pages/         # Public, customer, and admin pages
+│   └── styles/        # Global styles and design tokens
+├── public/            # Static assets
+└── Figma_Designs/     # Design references
 ```
+
+## Notes
+
+- The root `npm run dev` command uses `concurrently` to run both apps.
+- The backend exposes a simple `/api/health` endpoint for quick checks.
 
 ## License
 
